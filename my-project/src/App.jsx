@@ -8,7 +8,7 @@ function App() {
 
   return (
     <>
-       <header>
+      <header>
   <nav class="navbar">
     <ul class="nav-menu">
       <li><a href="#">MetaGold</a></li>
@@ -46,6 +46,7 @@ function App() {
         </ul>
       </li>
     </ul>
+    <button className='btn'>Buy 24k Gold</button>
   </nav>
 </header>
 
