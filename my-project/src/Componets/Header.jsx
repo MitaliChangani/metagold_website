@@ -41,6 +41,7 @@ const Header = () => {
         </ul>
       </li>
     </ul>
+    <button className="btn">Buy 24k Gold</button>
   </nav>
 </header>
 </>

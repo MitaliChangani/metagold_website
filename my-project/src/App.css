@@ -10,7 +10,6 @@ body {
 }
 
 .navbar {
-
   background-color:  #180d2f;
   padding: 1rem 2rem;
   height: 70px;
@@ -245,7 +244,6 @@ body {
   border-radius: 10px;
   font-size: 1rem;
   cursor: pointer;
-
   background-color: black;
   padding: 1rem 2rem;
 }
