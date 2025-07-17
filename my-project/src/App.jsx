@@ -1,11 +1,11 @@
-<<<<<<< HEAD
+
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import Header from './Componets/Header'
 import './Componets/Header.css'
-=======
+
 // import { useState } from 'react'
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
@@ -69,7 +69,7 @@ import './Componets/Header.css'
 
 import { useState, useEffect } from 'react';
 import './App.css';
->>>>>>> 3820f2f3b275a046f8847c6c9abdffd3498fafb0
+
 
 function App() {
   const [amount, setAmount] = useState(100);
@@ -88,10 +88,9 @@ function App() {
 
   return (
     <>
-<<<<<<< HEAD
+
     <Header/>
-=======
-<<<<<<< HEAD
+
       <header>
         <nav className="navbar">
           <ul className="nav-menu">
@@ -223,16 +222,12 @@ function App() {
     </ul>
   </nav>
 </header>
->>>>>>> f45d21b5ac9b9d033dcb2b2a377662c025b5aef8
->>>>>>> 3820f2f3b275a046f8847c6c9abdffd3498fafb0
+
     </>
   );
 }
 
-<<<<<<< HEAD
-export default App;
-=======
+
 export default App
 
 
->>>>>>> f45d21b5ac9b9d033dcb2b2a377662c025b5aef8
