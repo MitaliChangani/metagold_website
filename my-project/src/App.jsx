@@ -1,14 +1,8 @@
-
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useEffect } from 'react'
 import Header from './Componets/Header'
 import './Componets/Header.css'
-import upi from './assets/upi.png';
-
-
-import { useState, useEffect } from 'react';
-import './App.css';
-
+import './Componets/About1.css'
+import About1 from './Componets/About1'
 
 function App() {
   const [amount, setAmount] = useState(100);
@@ -27,102 +21,14 @@ function App() {
 
   return (
     <>
-
     <Header/>
-
-      <header>
-        <nav className="navbar">
-          <ul className="nav-menu">
-            <li><a href="#">MetaGold</a></li>
-            <li className="dropdown">
-              <a href="#">About Us</a>
-              <ul className="dropdown-menu">
-                <li><a href="#">What's MetaGold</a></li>
-                <li><a href="#">Team</a></li>
-                <li><a href="#">Careers</a></li>
-                <li><a href="#">MetaGold Diaries</a></li>
-              </ul>
-            </li>
-            <li className="dropdown">
-              <a href="#">Features</a>
-              <ul className="dropdown-menu">
-                <li><a href="#">Buy Gold</a></li>
-                <li><a href="#">Sell Gold</a></li>
-              </ul>
-            </li>
-            <li className="dropdown">
-              <a href="#">Resources</a>
-              <ul className="dropdown-menu">
-                <li><a href="#">Blog</a></li>
-                <li><a href="#">Insights</a></li>
-                <li><a href="#">Customer Stories</a></li>
-                <li><a href="#">Downloadable</a></li>
-              </ul>
-            </li>
-            <li className="dropdown">
-              <a href="#">Help</a>
-              <ul className="dropdown-menu">
-                <li><a href="#">Contact</a></li>
-                <li><a href="#">MetaGold How To's</a></li>
-                <li><a href="#">FAQs</a></li>
-              </ul>
-            </li>
-          </ul>
-          <button className="btn">Buy 24k Gold</button>
-        </nav>
-      </header>
-
-      <main className="hero">
-        <section className="left">
-          <h1>
-            Save Money in <span className="highlight">digital gold</span> from ₹ 10.
-          </h1>
-          <p>It’s automatic. Like magic.</p>
-          <button className="start-saving">Start Saving</button>
-
-          <div className="powered-rating">
-            <p className="powered">
-              Powered by <img src={upi} alt="upi" />
-            </p>
-            <div className="rating">
-              <p>Rated <strong>4.7</strong></p>
-              <span>⭐️⭐️⭐️⭐️⭐️½</span>
-              <span>by <strong>3.5 Crore</strong> users</span>
-            </div>
-          </div>
-        </section>
-
-        <section className="right">
-          <div className="card">
-            <div className="tabs">
-              <button className="active">Buy</button>
-              <button>Sell</button>
-            </div>
-
-            <label className="label">Enter gold amount</label>
-            <div className="input-toggle">
-              <button className="active">In Rupees</button>
-              <button>In Grams</button>
-            </div>
-
-            <div className="amount">
-              ₹ {amount}
-              <span>{goldInGrams} g</span>
-            </div>
-
-            <div className="price-box">
-              <span className="live">🔴 LIVE</span>
-              <span className="price">Price: ₹{goldPrice.toFixed(2)}/g</span>
-              <span className="validity">Valid for: {formattedTime}</span>
-            </div>
-
-            <button className="buy-now">Buy Now</button>
-          </div>
-        </section>
-      </main>
-
-    
-</>
+    <About1 amount={amount} goldInGrams={goldInGrams} goldPrice={goldPrice} formattedTime={formattedTime}/>
+    </>
   );
 }
 export default App;
+
+
+
+
+

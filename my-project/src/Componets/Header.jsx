@@ -4,48 +4,50 @@ const Header = () => {
   return (
     <>
         <header>
-  <nav class="navbar">
-    <ul class="nav-menu">
+  <nav className="navbar">
+    <ul className="nav-menu">
       <li><a href="#">MetaGold</a></li>
-      <li class="dropdown">
+      <li className="dropdown">
         <a href="#">About Us</a>
-        <ul class="dropdown-menu">
+        <ul className="dropdown-menu">
           <li><a href="#">What's MetaGold</a></li>
           <li><a href="#">Team</a></li>
           <li><a href="#">Careers</a></li>
           <li><a href="#">MetaGold Diaries</a></li>
         </ul>
       </li>
-      <li class="dropdown">
+      <li className="dropdown">
         <a href="#">Features</a>
-        <ul class="dropdown-menu">
+        <ul className="dropdown-menu">
           <li><a href="#">Buy Gold</a></li>
           <li><a href="#">Sell Gold</a></li>
         </ul>
       </li>
-      <li class="dropdown">
+      <li className="dropdown">
         <a href="#">Resources</a>
-        <ul class="dropdown-menu">
+        <ul className="dropdown-menu">
           <li><a href="#">Blog</a></li>
           <li><a href="#">Insights</a></li>
           <li><a href="#">Customer Stories</a></li>
           <li><a href="#">Downloadable</a></li>
         </ul>
       </li>
-      <li class="dropdown">
+      <li className="dropdown">
         <a href="#">Help</a>
-        <ul class="dropdown-menu">
+        <ul className="dropdown-menu">
           <li><a href="#">Contact</a></li>
           <li><a href="#">MetaGold How To's</a></li>
           <li><a href="#">FAQs</a></li>
         </ul>
       </li>
     </ul>
-    <button className="btn">Buy 24k Gold</button>
+    
+          <button className="btn">Buy 24k Gold</button>
+
   </nav>
 </header>
 </>
   )
 }
 
-export default Header
+export default Header;
