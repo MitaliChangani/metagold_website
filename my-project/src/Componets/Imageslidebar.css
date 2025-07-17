@@ -1,0 +1,23 @@
+.slider-container {
+  position: relative;
+  width: 90%;
+  max-width: 1000px;
+  margin: 60px auto;
+  padding: 20px;
+  background-color: #e8e3fa;
+  border-radius: 30px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.slider-wrapper {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+  min-width: 100%;
+  height: auto;
+  border-radius: 20px;
+  object-fit: cover;
+}

@@ -14,8 +14,7 @@ const About1 = ({amount ,goldInGrams, goldPrice, formattedTime}) => {
                     <button className="start-saving">Start Saving</button>
 
                     <div className="powered-rating">
-                        <p className="powered">
-                            Powered by<img src={upi} alt="UPI" />
+                        <p className="powered">Powered by <img src={upi} alt="UPI" />
                         </p>
                         <div className="rating">
                             <p>Rated <strong>4.7</strong></p>
