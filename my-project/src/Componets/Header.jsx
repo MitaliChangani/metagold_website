@@ -1,4 +1,5 @@
 import React from 'react'
+import logo from '../assets/logo.png'
 
 const Header = () => {
   return (
@@ -6,7 +7,7 @@ const Header = () => {
         <header>
   <nav className="navbar">
     <ul className="nav-menu">
-      <li><a href="#">MetaGold</a></li>
+      <li><a href="#"><img src={logo} alt="" /></a></li>
       <li className="dropdown">
         <a href="#">About Us</a>
         <ul className="dropdown-menu">

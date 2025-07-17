@@ -1,0 +1,149 @@
+.gold-saver-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 60px 80px;
+  background-color: #0f0832;
+  color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+}
+
+.left {
+  width: 45%;
+}
+
+.vault-image {
+  width: 160px;
+  margin-bottom: 20px;
+}
+
+.left h1 {
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.left h1 .highlight {
+  color: #f3cd56;
+}
+
+.left p {
+  color: #9cb2ce;
+  font-size: 16px;
+  margin-top: 10px;
+  margin-bottom: 40px;
+}
+
+.badges {
+  display: flex;
+  gap: 30px;
+  color: #ffffff;
+  align-items: center;
+}
+
+.badges div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.badges img {
+  width: 20px;
+}
+
+.right {
+  width: 50%;
+  background-color: #261b42;
+  border-radius: 20px;
+  padding: 30px;
+}
+
+.step-box {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.step-num {
+  background-color: #3d2d60;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.step-content h4 {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.tabs {
+  display: flex;
+  background-color: #3d2d60;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.tabs button {
+  flex: 1;
+  padding: 10px;
+  background: none;
+  border: none;
+  color: #bcbcbc;
+  cursor: pointer;
+}
+
+.tabs button.active {
+  background-color: #2d214f;
+  color: #fff;
+}
+
+.input-box {
+  border: 1px solid #00bfff;
+  border-radius: 8px;
+  padding: 12px 20px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  background-color: transparent;
+}
+
+.gray {
+  color: #9cb2ce;
+}
+
+.live-box {
+  background-color: #3b4b4b;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+}
+
+.live-dot {
+  color: red;
+  margin-right: 6px;
+}
+
+.validity {
+  color: #d8d8d8;
+  font-size: 12px;
+}
+
+.confirm-btn {
+  background-color: #805ef9;
+  color: white;
+  border: none;
+  width: 100%;
+  padding: 12px;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+}
