@@ -181,7 +181,7 @@ function App() {
           </div>
         </section>
       </main>
-=======
+
     <header>
   <nav class="navbar">
     <ul class="nav-menu">

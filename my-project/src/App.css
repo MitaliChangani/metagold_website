@@ -1,10 +1,6 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
 /* General Reset */
-=======
 
->>>>>>> f45d21b5ac9b9d033dcb2b2a377662c025b5aef8
+
 * {
   margin: 0;
   padding: 0;
@@ -16,7 +12,6 @@ body {
 }
 
 .navbar {
-<<<<<<< HEAD
   background-color:  #180d2f;
   padding: 1rem 2rem;
   height: 70px;
@@ -251,7 +246,6 @@ body {
   border-radius: 10px;
   font-size: 1rem;
   cursor: pointer;
-=======
   background-color: black;
   padding: 1rem 2rem;
 }
@@ -307,6 +301,6 @@ body {
 .dropdown-menu a:hover {
   background-color: #444;
   color: gold;
->>>>>>> f45d21b5ac9b9d033dcb2b2a377662c025b5aef8
+
 }
->>>>>>> 3820f2f3b275a046f8847c6c9abdffd3498fafb0
+
