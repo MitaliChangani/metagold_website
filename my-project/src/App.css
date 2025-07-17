@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* General Reset */
+=======
+
+>>>>>>> f45d21b5ac9b9d033dcb2b2a377662c025b5aef8
 * {
   margin: 0;
   padding: 0;
@@ -10,6 +14,7 @@ body {
 }
 
 .navbar {
+<<<<<<< HEAD
   background-color:  #180d2f;
   padding: 1rem 2rem;
   height: 70px;
@@ -244,4 +249,61 @@ body {
   border-radius: 10px;
   font-size: 1rem;
   cursor: pointer;
+=======
+  background-color: black;
+  padding: 1rem 2rem;
+}
+
+.nav-menu {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav-menu > li {
+  position: relative;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: #fff;
+  padding: 0.5rem 0;
+  display: block;
+}
+
+.nav-menu a:hover {
+  color: gold;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #333;
+  display: none;
+  list-style: none;
+  min-width: 200px;
+  z-index: 1000;
+  border-radius: 4px;
+}
+
+.dropdown-menu li {
+  padding: 0;
+}
+
+.dropdown-menu a {
+  padding: 0.75rem 1rem;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu a:hover {
+  background-color: #444;
+  color: gold;
+>>>>>>> f45d21b5ac9b9d033dcb2b2a377662c025b5aef8
 }
