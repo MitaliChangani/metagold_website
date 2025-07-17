@@ -1,4 +1,5 @@
 import React from 'react'
+import upi from '../assets/upi22.png'
 
 const About1 = ({amount ,goldInGrams, goldPrice, formattedTime}) => {
     return (
@@ -14,7 +15,7 @@ const About1 = ({amount ,goldInGrams, goldPrice, formattedTime}) => {
 
                     <div className="powered-rating">
                         <p className="powered">
-                            Powered by <img src="" alt="UPI" />
+                            Powered by<img src={upi} alt="UPI" />
                         </p>
                         <div className="rating">
                             <p>Rated <strong>4.7</strong></p>

@@ -52,7 +52,8 @@
 }
 
 .powered img {
-  height: 18px;
+  height: 50px;
+  margin-left: -60px;
 }
 
 .rating {
