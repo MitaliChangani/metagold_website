@@ -1,4 +1,10 @@
 
+import { useState, useEffect } from 'react'
+import Header from './Componets/Header'
+import './Componets/Header.css'
+import './Componets/About1.css'
+import About1 from './Componets/About1'
+
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
@@ -88,6 +94,14 @@ function App() {
 
   return (
     <>
+
+    <Header/>
+    <About1 amount={amount} goldInGrams={goldInGrams} goldPrice={goldPrice} formattedTime={formattedTime}/>
+      
+    </>
+  );
+}
+
 
     <Header/>
 
