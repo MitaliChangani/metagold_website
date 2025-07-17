@@ -1,5 +1,10 @@
 import React from 'react'
+<<<<<<< HEAD
 import logo from '../assets/logo.png'
+=======
+import { Link } from 'react-router-dom';
+
+>>>>>>> e02301096294126037a055b0e808d6f2841d6033
 
 const Header = () => {
   return (
@@ -7,38 +12,42 @@ const Header = () => {
         <header>
   <nav className="navbar">
     <ul className="nav-menu">
+<<<<<<< HEAD
       <li><a href="#"><img src={logo} alt="" /></a></li>
+=======
+      <li><Link to="/">MetaGold</Link></li>
+>>>>>>> e02301096294126037a055b0e808d6f2841d6033
       <li className="dropdown">
-        <a href="#">About Us</a>
+        <Link to="/">About Us</Link>
         <ul className="dropdown-menu">
-          <li><a href="#">What's MetaGold</a></li>
-          <li><a href="#">Team</a></li>
-          <li><a href="#">Careers</a></li>
-          <li><a href="#">MetaGold Diaries</a></li>
+          <li><Link to="/about2">What's MetaGold</Link></li>
+          <li><Link to="#">Team</Link></li>
+          <li><Link to="#">Careers</Link></li>
+          <li><Link to="#">MetaGold Diaries</Link></li>
         </ul>
       </li>
       <li className="dropdown">
-        <a href="#">Features</a>
+        <Link to="/">Features</Link>
         <ul className="dropdown-menu">
-          <li><a href="#">Buy Gold</a></li>
-          <li><a href="#">Sell Gold</a></li>
+          <li><Link to="#">Buy Gold</Link></li>
+          <li><Link to="/sellgold">Sell Gold</Link></li>
         </ul>
       </li>
       <li className="dropdown">
-        <a href="#">Resources</a>
+        <Link to="#">Resources</Link>
         <ul className="dropdown-menu">
-          <li><a href="#">Blog</a></li>
-          <li><a href="#">Insights</a></li>
-          <li><a href="#">Customer Stories</a></li>
-          <li><a href="#">Downloadable</a></li>
+          <li><Link to="#">Blog</Link></li>
+          <li><Link to="#">Insights</Link></li>
+          <li><Link to="#">Customer Stories</Link></li>
+          <li><Link to="#">Downloadable</Link></li>
         </ul>
       </li>
       <li className="dropdown">
-        <a href="#">Help</a>
+        <Link to="#">Help</Link>
         <ul className="dropdown-menu">
-          <li><a href="#">Contact</a></li>
-          <li><a href="#">MetaGold How To's</a></li>
-          <li><a href="#">FAQs</a></li>
+          <li><Link to="#">Contact</Link></li>
+          <li><Link to="#">MetaGold How To's</Link></li>
+          <li><Link to="#">FAQs</Link></li>
         </ul>
       </li>
     </ul>

@@ -6,6 +6,7 @@
   background-color: #120042;
   color: white;
   gap: 2rem;
+  padding-top: 60px;
 }
 
 /* Left Content */
@@ -49,11 +50,16 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+
 }
 
 .powered img {
   height: 50px;
-  margin-left: -60px;
+  margin-left: -9px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 10;
 }
 
 .rating {

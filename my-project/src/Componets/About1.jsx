@@ -16,6 +16,7 @@ const About1 = ({ amount, goldInGrams, goldPrice, formattedTime }) => {
           <div className="powered-rating">
             <p className="powered">
 
+<<<<<<< HEAD
               Powered by <img src={upi} alt="upi" />
             </p>
             <div className="rating">
@@ -25,6 +26,18 @@ const About1 = ({ amount, goldInGrams, goldPrice, formattedTime }) => {
             </div>
           </div>
         </section>
+=======
+                    <div className="powered-rating">
+                        <p className="powered">Powered by <img src={upi} alt="UPI" />
+                        </p>
+                        <div className="rating">
+                            <p>Rated <strong>4.7</strong></p>
+                            <span>⭐️⭐️⭐️⭐️⭐️½</span>
+                            <span>by <strong>3.5 Crore</strong> users</span>
+                        </div>
+                    </div>
+                </section>
+>>>>>>> e02301096294126037a055b0e808d6f2841d6033
 
         {/* <section className="right">
           <div className="card">

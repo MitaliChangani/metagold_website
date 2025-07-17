@@ -1,15 +1,29 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> e02301096294126037a055b0e808d6f2841d6033
 import { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './Componets/Header'
 import './Componets/Header.css'
 import './Componets/About1.css'
+import './Componets/About2.css'
 import About1 from './Componets/About1'
+<<<<<<< HEAD
 import Footer from './Componets/Footer'
 import './Componets/Footer.css'
 import Buygold from './Componets/Buygold'
 import './Componets/Buygold.css'
+=======
+import About2 from './Componets/About2'
+import ImageSlider from './Componets/ImageSlidebar';
+import SellGold from './Componets/SellGold';
+
+
+>>>>>>> e02301096294126037a055b0e808d6f2841d6033
 
 function App() {
+  const [showLogin, setShowLogin] = useState(false);
   const [amount, setAmount] = useState(100);
   const goldPrice = 10117.77;
   const [timer, setTimer] = useState(62);
@@ -23,23 +37,67 @@ function App() {
 
   const goldInGrams = (amount / goldPrice).toFixed(4);
   const formattedTime = `01:${timer.toString().padStart(2, '0')}`;
+    useEffect(() => {
+    setShowLogin(true);
+  }, []);
 
   return (
     <>
+<<<<<<< HEAD
 
       <Header />
       <About1 amount={amount} goldInGrams={goldInGrams} goldPrice={goldPrice} formattedTime={formattedTime} />
       <Footer />
       <Buygold/>
+=======
+        <Router>
+      <Header />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <About1
+              amount={amount}
+              goldInGrams={goldInGrams}
+              goldPrice={goldPrice}
+              formattedTime={formattedTime}
+            />
+          }
+        />
+        <Route path="/about2" element={
+          <>
+            <About2 />
+            <ImageSlider />
+          </>
+        } />
+         {/* <Route path="/sellgold" element={
+          <>
+            <SellGold/>
+          </>
+        } /> */}
+        <Route
+  path="/sellgold"
+  element={<SellGold show={true} onClose={() => {}} />}
+/>
+     
+      </Routes>
+    </Router>
+>>>>>>> e02301096294126037a055b0e808d6f2841d6033
     </>
   );
 }
 
+<<<<<<< HEAD
 export default App;
 
 
 
 
+=======
+
+
+export default App
+>>>>>>> e02301096294126037a055b0e808d6f2841d6033
 
 
 

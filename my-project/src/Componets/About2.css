@@ -1,0 +1,14 @@
+*{
+    background-color: #120042;
+    /* margin-top: 50px; */
+}
+.about2-head{
+    padding-top: 60px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+.about2-head span{
+    color: #ffd700;
+}
