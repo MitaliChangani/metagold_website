@@ -1,0 +1,312 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+/* General Reset */
+=======
+
+>>>>>>> f45d21b5ac9b9d033dcb2b2a377662c025b5aef8
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+.navbar {
+<<<<<<< HEAD
+  background-color:  #180d2f;
+  padding: 1rem 2rem;
+  height: 70px;
+}
+.btn{
+  margin-left: 1300px;
+  padding: 10px;
+  width: 150px;
+  border-radius: 5px;
+  position: relative;
+  top: -40px;
+  font-size: 16px;
+
+}
+.nav-menu {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-left: 50px;
+}
+
+.nav-menu > li {
+  position: relative;
+  padding: 0px 20px;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: #fff;
+  padding: 0.5rem 0;
+  display: block;
+}
+
+.nav-menu a:hover {
+  color: gold;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #333;
+  display: none;
+  list-style: none;
+  min-width: 200px;
+  z-index: 1000;
+  border-radius: 4px;
+}
+
+.dropdown-menu li {
+  padding: 0;
+}
+
+.dropdown-menu a {
+  padding: 0.75rem 1rem;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu a:hover {
+  background-color: #444;
+  color: gold;
+}
+
+
+
+
+/* Hero Section */
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 4rem 2rem;
+  background-color: #120042;
+  color: white;
+  gap: 2rem;
+}
+
+/* Left Content */
+.left {
+  flex: 1;
+  margin-left: 50px;
+}
+
+.left h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.left .highlight {
+  color: #ffd700;
+}
+
+.left p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.start-saving {
+  background-color: #8f5aff;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* Ratings & UPI */
+.powered-rating {
+  margin-top: 2rem;
+}
+
+.powered {
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.powered img {
+  height: 18px;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+}
+
+/* Right Card Section */
+.right {
+  flex-shrink: 0;
+  margin-right: 50px;
+}
+
+.card {
+  background-color: #180d2f;
+  padding: 2rem;
+  border-radius: 20px;
+  width: 350px;
+}
+
+.tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tabs button {
+  flex: 1;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: none;
+  background-color: #2c1a5e;
+  color: #ccc;
+  cursor: pointer;
+}
+
+.tabs button.active {
+  background-color: #3c2980;
+  color: white;
+}
+
+.label {
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+  color: #ccc;
+}
+
+.input-toggle {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.input-toggle button {
+  flex: 1;
+  padding: 0.6rem;
+  border: none;
+  background-color: #2c1a5e;
+  color: #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.input-toggle button.active {
+  background-color: #3c2980;
+  color: white;
+}
+
+.amount {
+  background-color: #2c1a5e;
+  padding: 1rem;
+  border-radius: 10px;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.price-box {
+  display: flex;
+  justify-content: space-between;
+  background-color: #2c1a5e;
+  padding: 0.75rem;
+  border-radius: 8px;
+  color: #ccc;
+  font-size: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+.price-box .live {
+  color: red;
+  font-weight: bold;
+}
+
+.buy-now {
+  background-color: #8f5aff;
+  color: white;
+  border: none;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+=======
+  background-color: black;
+  padding: 1rem 2rem;
+}
+
+.nav-menu {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav-menu > li {
+  position: relative;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: #fff;
+  padding: 0.5rem 0;
+  display: block;
+}
+
+.nav-menu a:hover {
+  color: gold;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #333;
+  display: none;
+  list-style: none;
+  min-width: 200px;
+  z-index: 1000;
+  border-radius: 4px;
+}
+
+.dropdown-menu li {
+  padding: 0;
+}
+
+.dropdown-menu a {
+  padding: 0.75rem 1rem;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu a:hover {
+  background-color: #444;
+  color: gold;
+>>>>>>> f45d21b5ac9b9d033dcb2b2a377662c025b5aef8
+}
+>>>>>>> 3820f2f3b275a046f8847c6c9abdffd3498fafb0
