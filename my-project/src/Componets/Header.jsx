@@ -1,10 +1,7 @@
 import React from 'react'
-<<<<<<< HEAD
 import logo from '../assets/logo.png'
-=======
 import { Link } from 'react-router-dom';
 
->>>>>>> e02301096294126037a055b0e808d6f2841d6033
 
 const Header = () => {
   return (
@@ -12,13 +9,13 @@ const Header = () => {
         <header>
   <nav className="navbar">
     <ul className="nav-menu">
-<<<<<<< HEAD
-      <li><a href="#"><img src={logo} alt="" /></a></li>
-=======
+
+      <li><a href="/"><img src={logo} alt="" /></a></li>
+
       <li><Link to="/">MetaGold</Link></li>
->>>>>>> e02301096294126037a055b0e808d6f2841d6033
+
       <li className="dropdown">
-        <Link to="/">About Us</Link>
+        <span >About Us</span>
         <ul className="dropdown-menu">
           <li><Link to="/about2">What's MetaGold</Link></li>
           <li><Link to="#">Team</Link></li>
@@ -27,14 +24,14 @@ const Header = () => {
         </ul>
       </li>
       <li className="dropdown">
-        <Link to="/">Features</Link>
+        <span>Features</span>
         <ul className="dropdown-menu">
-          <li><Link to="#">Buy Gold</Link></li>
+          <li><Link to="buygold">Buy Gold</Link></li>
           <li><Link to="/sellgold">Sell Gold</Link></li>
         </ul>
       </li>
       <li className="dropdown">
-        <Link to="#">Resources</Link>
+        <span>Resources</span>
         <ul className="dropdown-menu">
           <li><Link to="#">Blog</Link></li>
           <li><Link to="#">Insights</Link></li>
@@ -43,7 +40,7 @@ const Header = () => {
         </ul>
       </li>
       <li className="dropdown">
-        <Link to="#">Help</Link>
+        <span>Help</span>
         <ul className="dropdown-menu">
           <li><Link to="#">Contact</Link></li>
           <li><Link to="#">MetaGold How To's</Link></li>
@@ -59,5 +56,7 @@ const Header = () => {
 </>
   )
 }
+
+
 
 export default Header;
