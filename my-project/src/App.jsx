@@ -14,12 +14,14 @@ import './Componets/Buygold.css'
 
 import About2 from './Componets/About2'
 import ImageSlider from './Componets/ImageSlidebar';
-import SellGold from './Componets/SellGold';
+import SellGold from './Componets/SellGold'
+
 import Bloghelp from './Componets/Bloghelp';
 import Register from './Componets/Register';
 import './Componets/Register.css';
 import './Componets/Login.css';
 import Login from './Componets/Login';
+
 
 
 function App() {
