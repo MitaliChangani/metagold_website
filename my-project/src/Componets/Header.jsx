@@ -1,6 +1,7 @@
 import React from 'react'
 import logo from '../assets/logo.png'
 import { Link } from 'react-router-dom';
+import './Header.css';
 const Header = () => {
   return (
     <>
@@ -32,7 +33,9 @@ const Header = () => {
             <li className="dropdown">
               <span>Resources</span>
               <ul className="dropdown-menu">
-                <li><Link to="#">Help Blog</Link></li>
+                <li><Link to="/blog">Help Blog</Link></li>
+                <li><Link to="#"></Link></li>
+                <li><Link to="#"></Link></li>
                 <li><Link to="#">Downloadable</Link></li>
                 <li><Link to="#">Contact</Link></li>
               </ul>

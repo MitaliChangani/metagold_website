@@ -2,6 +2,7 @@ import React from 'react'
 import upi from '../assets/upi22.png'
 import cashgold from '../assets/cash-gold.png'
 import doorgold from '../assets/door-gold.png'
+import './About1.css';
 const About1 = ({ amount, goldInGrams, goldPrice, formattedTime }) => {
   return (
     <>

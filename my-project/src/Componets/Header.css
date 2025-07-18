@@ -9,14 +9,15 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f5f5f5;
 }
-
 /* Header Styles */
+/* Navbar Styles */
 header {
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 1000;
   background-color: #000; /* Black background */
+  background-color: #000;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
 }
 
@@ -28,6 +29,9 @@ header {
 }
 
 /* Navigation Menu */
+.dropdown span:hover{
+  color: #e6c200;
+}
 .nav-menu {
   display: flex;
   align-items: center;
@@ -43,9 +47,9 @@ header {
 .nav-menu > li {
   position: relative;
 }
-
 .nav-menu a,
 .nav-menu span {
+.nav-menu a {
   color: #fff;
   text-decoration: none;
   font-size: 15px;
@@ -61,12 +65,18 @@ header {
   color: #ffd700; /* Gold hover */
 }
 
+.nav-menu a:hover {
+  color: #ffd700;
+}
+
 /* Dropdown Styles */
 .dropdown-menu {
   position: absolute;
   top: 45px;
   left: 0;
   background-color: #1a1a1a; /* Dark dropdown */
+  background-color: #1a1a1a;
+
   border-radius: 6px;
   min-width: 200px;
   display: none;
@@ -80,6 +90,10 @@ header {
   font-size: 14px;
   color: #eee;
   transition: background 0.3s ease;
+
+}
+.dropdown a:hover{
+  color: #e6c200;
 }
 
 .dropdown-menu a:hover {
@@ -91,7 +105,9 @@ header {
   display: flex;
 }
 
+
 /* CTA Button */
+/* Button */
 .btn {
   background-color: #ffd700;
   color: #000;
@@ -107,6 +123,7 @@ header {
 .btn:hover {
   background-color: #e6c200;
 }
+
 
 /* Responsive */
 @media (max-width: 768px) {

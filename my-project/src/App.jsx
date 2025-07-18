@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom';
 import Header from './Componets/Header'
-import './Componets/Header.css'
-import './Componets/About1.css'
 import './Componets/About2.css'
 import About1 from './Componets/About1'
 
 import './Componets/Bloghelp.css'
+
 
 import Footer from './Componets/Footer'
 import './Componets/Footer.css'
@@ -41,16 +40,7 @@ function App() {
 
   return (
     <>
-
-
-{/* 
-      <Header />
-      <About1 amount={amount} goldInGrams={goldInGrams} goldPrice={goldPrice} formattedTime={formattedTime} />
-      <Footer />
-      <Buygold/> */}
-
-
-      <Header />
+    <Header />
       <Routes>
         <Route
           path="/"
@@ -77,13 +67,14 @@ function App() {
           path="/buygold"
           element={<Buygold/>}
         />
-
+        <Route
+          path="/blog"
+          element={<Bloghelp/>}
+        /> 
 
     </Routes>
-    <Bloghelp/>
   <Footer />
   </>
   );
 }
-
 export default App;
