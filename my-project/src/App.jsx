@@ -1,26 +1,24 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> e02301096294126037a055b0e808d6f2841d6033
 import { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Header from './Componets/Header'
 import './Componets/Header.css'
 import './Componets/About1.css'
 import './Componets/About2.css'
 import About1 from './Componets/About1'
-<<<<<<< HEAD
+
+import './Componets/Bloghelp.css'
+
 import Footer from './Componets/Footer'
 import './Componets/Footer.css'
 import Buygold from './Componets/Buygold'
 import './Componets/Buygold.css'
-=======
+
 import About2 from './Componets/About2'
 import ImageSlider from './Componets/ImageSlidebar';
 import SellGold from './Componets/SellGold';
+import Bloghelp from './Componets/Bloghelp';
 
 
->>>>>>> e02301096294126037a055b0e808d6f2841d6033
 
 function App() {
   const [showLogin, setShowLogin] = useState(false);
@@ -35,22 +33,23 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
-  const goldInGrams = (amount / goldPrice).toFixed(4);
+  const goldInGrams = (amount && goldPrice) ? (amount / goldPrice).toFixed(4) : '0.0000';
   const formattedTime = `01:${timer.toString().padStart(2, '0')}`;
-    useEffect(() => {
+  useEffect(() => {
     setShowLogin(true);
   }, []);
 
   return (
     <>
-<<<<<<< HEAD
 
+
+{/* 
       <Header />
       <About1 amount={amount} goldInGrams={goldInGrams} goldPrice={goldPrice} formattedTime={formattedTime} />
       <Footer />
-      <Buygold/>
-=======
-        <Router>
+      <Buygold/> */}
+
+
       <Header />
       <Routes>
         <Route
@@ -70,35 +69,21 @@ function App() {
             <ImageSlider />
           </>
         } />
-         {/* <Route path="/sellgold" element={
-          <>
-            <SellGold/>
-          </>
-        } /> */}
         <Route
-  path="/sellgold"
-  element={<SellGold show={true} onClose={() => {}} />}
-/>
-     
-      </Routes>
-    </Router>
->>>>>>> e02301096294126037a055b0e808d6f2841d6033
-    </>
+          path="/sellgold"
+          element={<SellGold show={true} onClose={() => { }} />}
+        />
+         <Route
+          path="/buygold"
+          element={<Buygold/>}
+        />
+
+
+    </Routes>
+    <Bloghelp/>
+  <Footer />
+  </>
   );
 }
 
-<<<<<<< HEAD
 export default App;
-
-
-
-
-=======
-
-
-export default App
->>>>>>> e02301096294126037a055b0e808d6f2841d6033
-
-
-
-

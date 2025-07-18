@@ -16,7 +16,7 @@ const About1 = ({ amount, goldInGrams, goldPrice, formattedTime }) => {
           <div className="powered-rating">
             <p className="powered">
 
-<<<<<<< HEAD
+
               Powered by <img src={upi} alt="upi" />
             </p>
             <div className="rating">
@@ -26,7 +26,7 @@ const About1 = ({ amount, goldInGrams, goldPrice, formattedTime }) => {
             </div>
           </div>
         </section>
-=======
+        <section>
                     <div className="powered-rating">
                         <p className="powered">Powered by <img src={upi} alt="UPI" />
                         </p>
@@ -37,9 +37,9 @@ const About1 = ({ amount, goldInGrams, goldPrice, formattedTime }) => {
                         </div>
                     </div>
                 </section>
->>>>>>> e02301096294126037a055b0e808d6f2841d6033
 
-        {/* <section className="right">
+
+        <section className="right">
           <div className="card">
             <div className="tabs">
               <button className="active">Buy</button>
@@ -59,13 +59,13 @@ const About1 = ({ amount, goldInGrams, goldPrice, formattedTime }) => {
 
             <div className="price-box">
               <span className="live">🔴 LIVE</span>
-              <span className="price">Price: ₹{goldPrice.toFixed(2)}/g</span>
+              <span className="price">Price: ₹{goldPrice?goldPrice.toFixed(2):'0.00'}/g</span>
               <span className="validity">Valid for: {formattedTime}</span>
             </div>
 
             <button className="buy-now">Buy Now</button>
           </div>
-        </section> */}
+        </section>
       </main>
       <div className="gold-banner-container">
         <div className="gold-banner-box">
