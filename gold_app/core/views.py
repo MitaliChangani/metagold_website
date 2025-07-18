@@ -8,10 +8,12 @@ from .serializers import (
     BuyGoldSerializer,
     SellGoldSerializer,
     UserProfileSerializer,
+    RegisterSerializer
 )
 from decimal import Decimal
 from django.contrib.auth.models import User
-
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework import status
 
 class BuyGoldView(APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -84,3 +86,17 @@ class TransactionListView(APIView):
         transactions = Transaction.objects.filter(user=request.user).order_by('-created_at')
         serializer = TransactionSerializer(transactions, many=True)
         return Response(serializer.data)
+    
+
+class RegisterView(APIView):
+    def post(self, request):
+        serializer = RegisterSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                "message": "User registered successfully.",
+                "refresh": str(refresh),
+                "access": str(refresh.access_token),
+            }, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
