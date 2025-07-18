@@ -1,10 +1,9 @@
 import React from 'react'
-<<<<<<< HEAD
+
 import logo from '../assets/logo.png'
-=======
+
 import { Link } from 'react-router-dom';
 
->>>>>>> e02301096294126037a055b0e808d6f2841d6033
 
 const Header = () => {
   return (
@@ -12,11 +11,10 @@ const Header = () => {
         <header>
   <nav className="navbar">
     <ul className="nav-menu">
-<<<<<<< HEAD
+
       <li><a href="#"><img src={logo} alt="" /></a></li>
-=======
+
       <li><Link to="/">MetaGold</Link></li>
->>>>>>> e02301096294126037a055b0e808d6f2841d6033
       <li className="dropdown">
         <Link to="/">About Us</Link>
         <ul className="dropdown-menu">

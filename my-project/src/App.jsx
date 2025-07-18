@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> e02301096294126037a055b0e808d6f2841d6033
 import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './Componets/Header'
@@ -9,18 +5,18 @@ import './Componets/Header.css'
 import './Componets/About1.css'
 import './Componets/About2.css'
 import About1 from './Componets/About1'
-<<<<<<< HEAD
+
 import Footer from './Componets/Footer'
 import './Componets/Footer.css'
 import Buygold from './Componets/Buygold'
 import './Componets/Buygold.css'
-=======
+
 import About2 from './Componets/About2'
 import ImageSlider from './Componets/ImageSlidebar';
 import SellGold from './Componets/SellGold';
 
 
->>>>>>> e02301096294126037a055b0e808d6f2841d6033
+
 
 function App() {
   const [showLogin, setShowLogin] = useState(false);
@@ -43,13 +39,13 @@ function App() {
 
   return (
     <>
-<<<<<<< HEAD
+
 
       <Header />
       <About1 amount={amount} goldInGrams={goldInGrams} goldPrice={goldPrice} formattedTime={formattedTime} />
       <Footer />
       <Buygold/>
-=======
+
         <Router>
       <Header />
       <Routes>
@@ -82,23 +78,10 @@ function App() {
      
       </Routes>
     </Router>
->>>>>>> e02301096294126037a055b0e808d6f2841d6033
+
     </>
   );
 }
 
-<<<<<<< HEAD
+
 export default App;
-
-
-
-
-=======
-
-
-export default App
->>>>>>> e02301096294126037a055b0e808d6f2841d6033
-
-
-
-
