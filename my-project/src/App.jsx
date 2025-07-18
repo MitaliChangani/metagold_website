@@ -14,6 +14,7 @@ import './Componets/Buygold.css'
 import About2 from './Componets/About2'
 import ImageSlider from './Componets/ImageSlidebar';
 import SellGold from './Componets/SellGold';
+import Animation from './Componets/Animation';
 
 
 
@@ -78,6 +79,7 @@ function App() {
 
     </Routes>
   <Footer />
+  <Animation/>
   </>
   );
 }
