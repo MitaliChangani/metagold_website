@@ -16,7 +16,10 @@ import About2 from './Componets/About2'
 import ImageSlider from './Componets/ImageSlidebar';
 import SellGold from './Componets/SellGold';
 import Bloghelp from './Componets/Bloghelp';
-
+import Register from './Componets/Register';
+import './Componets/Register.css';
+import './Componets/Login.css';
+import Login from './Componets/Login';
 
 
 function App() {
@@ -24,6 +27,14 @@ function App() {
   const [amount, setAmount] = useState(100);
   const goldPrice = 10117.77;
   const [timer, setTimer] = useState(62);
+
+
+  
+  useEffect(() => {
+    // Clear tokens on app reload
+    localStorage.removeItem('access');
+    localStorage.removeItem('refresh');
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -71,6 +82,10 @@ function App() {
           path="/blog"
           element={<Bloghelp/>}
         /> 
+
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/About1" element={<About1 />} /> {/* Home after login */}
 
     </Routes>
   <Footer />

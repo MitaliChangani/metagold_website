@@ -1,0 +1,99 @@
+/* Container */
+.register-container {
+  max-width: 400px;
+  margin: 5rem auto;
+  padding: 2.5rem;
+  background-color: #1f1f2f;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Heading */
+.register-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+}
+
+/* Input Fields */
+.register-container input[type="text"],
+.register-container input[type="email"],
+.register-container input[type="password"] {
+  width: 100%;
+  padding: 0.8rem;
+  margin: 0.6rem 0;
+  border: none;
+  border-radius: 6px;
+  background-color: #2b2b40;
+  color: #fff;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.register-container input:focus {
+  outline: none;
+  background-color: #343454;
+  box-shadow: 0 0 0 2px #5c7cfa;
+}
+
+/* Button */
+.register-container button {
+  width: 100%;
+  padding: 0.9rem;
+  margin-top: 1rem;
+  background-color: #5c7cfa;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.register-container button:hover {
+  background-color: #4a66d6;
+}
+
+/* Messages */
+.success-msg,
+.error-msg {
+  text-align: center;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border-radius: 6px;
+}
+
+.success-msg {
+  background-color: #2e7d32;
+  color: #c8f7c5;
+}
+
+.error-msg {
+  background-color: #c62828;
+  color: #ffdada;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .register-container {
+    padding: 1.5rem;
+    margin: 3rem 1rem;
+  }
+
+  .register-container h2 {
+    font-size: 1.6rem;
+  }
+}
+
+.login-link{
+  text-align: center;
+  margin-top: 5px;
+}
+
+.login-link a{
+  color: white;
+
+}

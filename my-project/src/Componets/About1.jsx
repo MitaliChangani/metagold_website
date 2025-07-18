@@ -1,9 +1,15 @@
+import { useNavigate } from 'react-router-dom';
 import React from 'react'
 import upi from '../assets/upi22.png'
 import cashgold from '../assets/cash-gold.png'
 import doorgold from '../assets/door-gold.png'
 import './About1.css';
+import Register from './Register';
 const About1 = ({ amount, goldInGrams, goldPrice, formattedTime }) => {
+  const navigate = useNavigate();
+  const handleGetStarted = () => {
+    navigate('/register'); // navigate to register route
+  };
   return (
     <>
       <main className="hero">
@@ -12,7 +18,9 @@ const About1 = ({ amount, goldInGrams, goldPrice, formattedTime }) => {
             "Buy and Sell <span className="highlight">24K gold!</span> Instantly. Securely. Smartly."
           </h1>
 
-          <button className="start-saving">Get Started</button>
+          <button className="start-saving" onClick={handleGetStarted}>
+        Get Started
+      </button>
 
           <div className="powered-rating">
             <p className="powered">
