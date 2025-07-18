@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom';
 import Header from './Componets/Header'
-import './Componets/Header.css'
-import './Componets/About1.css'
 import './Componets/About2.css'
 import About1 from './Componets/About1'
+
+import './Componets/Bloghelp.css'
+
 
 import Footer from './Componets/Footer'
 import './Componets/Footer.css'
@@ -13,8 +14,10 @@ import './Componets/Buygold.css'
 
 import About2 from './Componets/About2'
 import ImageSlider from './Componets/ImageSlidebar';
-import SellGold from './Componets/SellGold';
-import Animation from './Componets/Animation';
+import SellGold from './Componets/SellGold'
+
+import Bloghelp from './Componets/Bloghelp';
+
 
 
 
@@ -39,16 +42,7 @@ function App() {
 
   return (
     <>
-
-
-{/* 
-      <Header />
-      <About1 amount={amount} goldInGrams={goldInGrams} goldPrice={goldPrice} formattedTime={formattedTime} />
-      <Footer />
-      <Buygold/> */}
-
-
-      <Header />
+    <Header />
       <Routes>
         <Route
           path="/"
@@ -75,14 +69,14 @@ function App() {
           path="/buygold"
           element={<Buygold/>}
         />
-
+        <Route
+          path="/blog"
+          element={<Bloghelp/>}
+        /> 
 
     </Routes>
   <Footer />
-  <Animation/>
   </>
   );
 }
-
 export default App;
-
