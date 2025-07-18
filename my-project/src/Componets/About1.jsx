@@ -26,6 +26,18 @@ const About1 = ({ amount, goldInGrams, goldPrice, formattedTime }) => {
             </div>
           </div>
         </section>
+        <section>
+                    <div className="powered-rating">
+                        <p className="powered">Powered by <img src={upi} alt="UPI" />
+                        </p>
+                        <div className="rating">
+                            <p>Rated <strong>4.7</strong></p>
+                            <span>⭐️⭐️⭐️⭐️⭐️½</span>
+                            <span>by <strong>3.5 Crore</strong> users</span>
+                        </div>
+                    </div>
+                </section>
+
 
         <section className="right">
           <div className="card">

@@ -38,6 +38,15 @@ function App() {
 
   return (
     <>
+
+
+{/* 
+      <Header />
+      <About1 amount={amount} goldInGrams={goldInGrams} goldPrice={goldPrice} formattedTime={formattedTime} />
+      <Footer />
+      <Buygold/> */}
+
+
       <Header />
       <Routes>
         <Route
@@ -69,13 +78,9 @@ function App() {
 
     </Routes>
   <Footer />
-    
-    </>
+  </>
   );
 }
 
 export default App;
-
-
-
 

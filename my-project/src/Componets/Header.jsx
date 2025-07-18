@@ -12,6 +12,7 @@ const Header = () => {
 
       <li><a href="/"><img src={logo} alt="" /></a></li>
 
+
       <li><Link to="/">MetaGold</Link></li>
 
       <li className="dropdown">
