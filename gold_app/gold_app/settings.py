@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -64,6 +65,25 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
 ]
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # React frontend
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:5173"
+]
+
+SIMPLE_JWT = {
+    "AUTH_COOKIE": "access_token",  # Cookie name
+    "AUTH_COOKIE_SECURE": True,     # Use True in production with HTTPS
+    "AUTH_COOKIE_HTTP_ONLY": True,  # Prevent JavaScript access
+    "AUTH_COOKIE_SAMESITE": "Lax",  # Or "Strict" or "None"
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+}
 
 ROOT_URLCONF = 'gold_app.urls'
 
