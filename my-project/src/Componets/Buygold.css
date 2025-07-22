@@ -1,14 +1,16 @@
 .gold-saver-container {
+  margin-top: 90px;
+  margin-left: 150px;
   display: flex;
   justify-content: space-between;
-  padding: 60px 80px;
-  background-color: #0f0832;
+  padding: 60px 80px; 
   color: #ffffff;
   font-family: 'Poppins', sans-serif;
 }
 
 .left {
   width: 45%;
+  margin-top: 40px;
 }
 
 .vault-image {
@@ -56,6 +58,7 @@
   background-color: #261b42;
   border-radius: 20px;
   padding: 30px;
+  margin-right: 90px;
 }
 
 .step-box {

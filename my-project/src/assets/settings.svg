@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="64" height="64" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.794" y1="0.229" x2="0.195" y2="0.781" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ffd500"/>
+      <stop offset="0.999" stop-color="#ff9800"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="0.68" y1="0.019" x2="0.379" y2="0.824" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ffeb9d"/>
+      <stop offset="0.999" stop-color="#fff4d0"/>
+    </linearGradient>
+  </defs>
+  <g id="automated_syastem" data-name="automated syastem" transform="translate(-250.5 -159.5)">
+    <g id="Group_202610" data-name="Group 202610">
+      <g id="Rectangle_155344" data-name="Rectangle 155344" transform="translate(250.5 159.5)" fill="#fff" stroke="#707070" stroke-width="1" opacity="0">
+        <rect width="64" height="64" stroke="none"/>
+        <rect x="0.5" y="0.5" width="63" height="63" fill="none"/>
+      </g>
+      <g id="why_choose_jar_automated_system_" data-name="why choose jar (automated system)" transform="translate(282.5 191.5)">
+        <g id="Group_195989" data-name="Group 195989" transform="translate(-28.289 -30)">
+          <path id="Path_197835" data-name="Path 197835" d="M21,1.932S18.923,8,18.923,7.994a23.573,23.573,0,0,0-4.857,2.827L7.808,9.6a2.073,2.073,0,0,0-1.961.686A30.081,30.081,0,0,0,.116,20.288a2.105,2.105,0,0,0,.4,2.057s4.175,4.841,4.175,4.84a24.1,24.1,0,0,0,0,5.658L.51,37.666a2.105,2.105,0,0,0-.4,2.057,30.081,30.081,0,0,0,5.733,9.992,2.073,2.073,0,0,0,1.961.686l6.251-1.222A23.6,23.6,0,0,0,18.918,52L21,58.067a2.085,2.085,0,0,0,1.562,1.372,29.6,29.6,0,0,0,11.469,0,2.085,2.085,0,0,0,1.562-1.372S37.665,52,37.665,52.005a23.573,23.573,0,0,0,4.857-2.827L48.771,50.4a2.073,2.073,0,0,0,1.961-.686,30.082,30.082,0,0,0,5.731-10.005,2.105,2.105,0,0,0-.4-2.057s-4.175-4.841-4.175-4.84a24.1,24.1,0,0,0,0-5.658l4.175-4.841a2.105,2.105,0,0,0,.4-2.057,30.083,30.083,0,0,0-5.73-9.973A2.073,2.073,0,0,0,48.771,9.6L42.52,10.82A23.6,23.6,0,0,0,37.661,8L35.587,1.932A2.085,2.085,0,0,0,34.025.561a29.594,29.594,0,0,0-11.469,0,2.085,2.085,0,0,0-1.562,1.372Z" transform="translate(0 0)" fill-rule="evenodd" fill="url(#linear-gradient)"/>
+          <path id="Path_197836" data-name="Path 197836" d="M196.239,203.67a12.781,12.781,0,1,1-12.781,12.781h0A12.788,12.788,0,0,1,196.239,203.67Z" transform="translate(-167.949 -186.452)" fill-rule="evenodd" fill="url(#linear-gradient-2)"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

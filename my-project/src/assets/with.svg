@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="64" height="64" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" y1="0.014" x2="0.5" y2="0.748" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ffd500"/>
+      <stop offset="0.999" stop-color="#ff9800"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="0.5" y1="0.598" x2="0.5" y2="1.202" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-3" x1="0.5" y1="0.406" x2="0.5" y2="1.11" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-4" x1="0.5" y1="-0.041" x2="0.5" y2="1.102" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ffeb9d"/>
+      <stop offset="0.999" stop-color="#fff4d0"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-5" x1="0.5" y1="1.087" x2="0.5" y2="-0.071" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-6" x1="0.5" y1="-0.176" x2="0.5" y2="0.91" xlink:href="#linear-gradient-4"/>
+  </defs>
+  <g id="Group_202606" data-name="Group 202606" transform="translate(-250.5 -159.5)">
+    <g id="Rectangle_155345" data-name="Rectangle 155345" transform="translate(250.5 159.5)" fill="#fff" stroke="#707070" stroke-width="1" opacity="0">
+      <rect width="64" height="64" stroke="none"/>
+      <rect x="0.5" y="0.5" width="63" height="63" fill="none"/>
+    </g>
+    <g id="why_choose_jar_Withdrawal_anytime_" data-name="why choose jar (Withdrawal anytime)" transform="translate(282.5 191.5)">
+      <g id="Group_195993" data-name="Group 195993" transform="translate(-30 -26.561)">
+        <rect id="Rectangle_152213" data-name="Rectangle 152213" width="60" height="17.378" rx="8.689" fill="url(#linear-gradient)"/>
+        <rect id="Rectangle_152214" data-name="Rectangle 152214" width="42.209" height="31.9" transform="translate(8.552 21.221)" fill="url(#linear-gradient-2)"/>
+        <rect id="Rectangle_152215" data-name="Rectangle 152215" width="42.209" height="31.9" transform="translate(8.552 15.894)" fill="url(#linear-gradient-3)"/>
+        <rect id="Rectangle_152216" data-name="Rectangle 152216" width="42.209" height="34.743" transform="translate(8.552 7.219)" fill="url(#linear-gradient-4)"/>
+        <path id="Path_199915" data-name="Path 199915" d="M164.944,80.907v23.075a6.909,6.909,0,0,0-5.9,8.747H135.126a6.907,6.907,0,0,0-6.549-8.785V80.907Z" transform="translate(-117.104 -73.688)" fill="url(#linear-gradient-5)"/>
+        <path id="Path_199916" data-name="Path 199916" d="M231.33,84.045a10.974,10.974,0,1,1-21.492-3.137h21.038A10.977,10.977,0,0,1,231.33,84.045Z" transform="translate(-190.7 -73.689)" fill="url(#linear-gradient-6)"/>
+        <rect id="Rectangle_152217" data-name="Rectangle 152217" width="60" height="17.378" rx="8.689" fill="url(#linear-gradient)"/>
+        <rect id="Rectangle_152218" data-name="Rectangle 152218" width="42.209" height="31.9" transform="translate(8.552 21.221)" fill="url(#linear-gradient-2)"/>
+        <rect id="Rectangle_152219" data-name="Rectangle 152219" width="42.209" height="31.9" transform="translate(8.552 15.894)" fill="url(#linear-gradient-3)"/>
+        <rect id="Rectangle_152220" data-name="Rectangle 152220" width="42.209" height="34.743" transform="translate(8.552 7.219)" fill="url(#linear-gradient-4)"/>
+        <path id="Path_199917" data-name="Path 199917" d="M164.944,80.907v23.075a6.909,6.909,0,0,0-5.9,8.747H135.126a6.907,6.907,0,0,0-6.549-8.785V80.907Z" transform="translate(-117.104 -73.688)" fill="url(#linear-gradient-5)"/>
+        <path id="Path_199918" data-name="Path 199918" d="M231.33,84.045a10.974,10.974,0,1,1-21.492-3.137h21.038A10.977,10.977,0,0,1,231.33,84.045Z" transform="translate(-190.7 -73.689)" fill="url(#linear-gradient-6)"/>
+      </g>
+    </g>
+  </g>
+</svg>

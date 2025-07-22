@@ -4,9 +4,8 @@ import Header from './Componets/Header'
 import './Componets/About2.css'
 import About1 from './Componets/About1'
 
-import './Componets/Bloghelp.css'
-
-
+import Contact from './Componets/Contact';
+import Downloadable from './Componets/Downloadable';
 import Footer from './Componets/Footer'
 import './Componets/Footer.css'
 import Buygold from './Componets/Buygold'
@@ -14,16 +13,27 @@ import './Componets/Buygold.css'
 
 import About2 from './Componets/About2'
 import ImageSlider from './Componets/ImageSlidebar';
-import SellGold from './Componets/SellGold';
-import Bloghelp from './Componets/Bloghelp';
+import SellGold from './Componets/SellGold'
 
+import Blog from './Componets/Blog';
+import Help from './Componets/Help';
+import Register from './Componets/Register';
+import Login from './Componets/Login';
 
-
+import Wallet from './Componets/Wallet';
 function App() {
   const [showLogin, setShowLogin] = useState(false);
   const [amount, setAmount] = useState(100);
   const goldPrice = 10117.77;
   const [timer, setTimer] = useState(62);
+
+
+
+  useEffect(() => {
+    // Clear tokens on app reload
+    localStorage.removeItem('access');
+    localStorage.removeItem('refresh');
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -40,7 +50,7 @@ function App() {
 
   return (
     <>
-    <Header />
+      <Header />
       <Routes>
         <Route
           path="/"
@@ -63,18 +73,42 @@ function App() {
           path="/sellgold"
           element={<SellGold show={true} onClose={() => { }} />}
         />
-         <Route
+        <Route
           path="/buygold"
-          element={<Buygold/>}
+          element={<Buygold />}
         />
         <Route
-          path="/blog"
-          element={<Bloghelp/>}
-        /> 
+          path="/help"
+          element={<Help />}
+        />
 
-    </Routes>
-  <Footer />
-  </>
+        <Route
+          path="/blog"
+          element={<Blog />}
+        />
+
+
+        <Route
+          path="/downloadable"
+          element={<Downloadable />}
+        />
+
+        <Route
+          path="/contact"
+          element={<Contact />}
+        />
+        
+        <Route
+          path="/wallet"
+          element={<Wallet />}
+        />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/About1" element={<About1 />} />
+
+      </Routes>
+      <Footer />
+    </>
   );
 }
 export default App;

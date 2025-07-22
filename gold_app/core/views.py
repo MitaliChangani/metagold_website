@@ -8,9 +8,39 @@ from .serializers import (
     BuyGoldSerializer,
     SellGoldSerializer,
     UserProfileSerializer,
+    RegisterSerializer
 )
 from decimal import Decimal
 from django.contrib.auth.models import User
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework import status
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+class CookieTokenObtainPairView(TokenObtainPairView):
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+        tokens = response.data
+        access = tokens.get('access')
+        refresh = tokens.get('refresh')
+
+        if access:
+            response.set_cookie(
+                key="access_token",
+                value=access,
+                httponly=True,
+                secure=True,  # Set to False only in local development (for http)
+                samesite="Lax"
+            )
+        if refresh:
+            response.set_cookie(
+                key="refresh_token",
+                value=refresh,
+                httponly=True,
+                secure=True,
+                samesite="Lax"
+            )
+
+        return response
 
 
 class BuyGoldView(APIView):
@@ -84,3 +114,24 @@ class TransactionListView(APIView):
         transactions = Transaction.objects.filter(user=request.user).order_by('-created_at')
         serializer = TransactionSerializer(transactions, many=True)
         return Response(serializer.data)
+    
+
+class RegisterView(APIView):
+    def post(self, request):
+        serializer = RegisterSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                "message": "User registered successfully.",
+                "refresh": str(refresh),
+                "access": str(refresh.access_token),
+            }, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class LogoutView(APIView):
+    def post(self, request):
+        response = Response({"message": "Logged out"})
+        response.delete_cookie("access_token")
+        response.delete_cookie("refresh_token")
+        return response

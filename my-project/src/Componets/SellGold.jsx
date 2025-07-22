@@ -1,36 +1,81 @@
-import React from 'react';
-import './SEllGold.css';
+import React, { useState } from 'react';
+import './SellGold.css';
+import { useNavigate } from 'react-router-dom';
+import sell from '../assets/sell.png';
+import sell2 from '../assets/sell2.png';
+import logo from '../assets/logo.png'
 
-const SellGold = ({ show, onClose }) => {
-  return (
-    <div className={`login-sidebar ${show ? 'show' : ''}`}>
-      <button className="close-btn" onClick={onClose}>×</button>
-      <div className="login-content">
-        <img src="/logo.png" alt="Jar Icon" className="jar-icon" />
-        <h2>Welcome to Jar</h2>
-        
-        <input
-          type="text"
-          placeholder="Enter mobile number"
-          className="input-field"
-        />
-        
-        <div className="checkbox-section">
-          <input type="checkbox" id="consent" />
-          <label htmlFor="consent">
-            Allow Jar to access your credit report from RBI approved companies to give you the best loan offers.
-          </label>
-        </div>
+function Sellgold() 
+{
+  const navigate = useNavigate();
 
-        <button className="next-btn">Next</button>
-
-        <p className="terms-text">
-          We'll text you to confirm your number. Standard message and data rates apply. <br />
-          <span className="link">Terms & conditions apply</span>
-        </p>
-      </div>
-    </div>
-  );
+const handleGetStarted = () => {
+  navigate('/register');
 };
+  const [showPopup, setShowPopup] = useState(true);
+  const [mobile, setMobile] = useState('');
 
-export default SellGold;
+  const handlePopupToggle = () => {
+    setShowPopup(!showPopup);
+  };
+
+  return (
+    <>
+      <div>
+        <section className="sell-gold-section">
+          <div className="sell-left">
+            <img src={sell} alt="sell" className="money-image" />
+            <h1>Sell Gold Instantly</h1>
+            <p>We've been told it is possible to revolutionize the payment industry.</p>
+
+            <div className="features">
+              <div className="feature-item"><span>100% Secure</span></div>
+              <div className="feature-item"><span>24 Karat</span></div>
+              <div className="feature-item"><span>99.95% Pure Gold</span></div>
+            </div>
+          </div>
+
+          <div className="sell-right">
+            <div className="login-card" onClick={handlePopupToggle}>
+              <img src={sell2} alt="sell2" className="login-icon" />
+              <h3>Login to Trade in Gold</h3>
+              <p>Keep Trading with MetaGold</p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      {/* POPUP Modal */}
+      {showPopup && (
+        <div className="popup-overlay">
+          <div className="popup-modal">
+            <button className="popup-close" onClick={handlePopupToggle}>×</button>
+            <div className="popup-content">
+              <img src={logo} alt="popup-icon" className="popup-icon" />
+              <h2>Welcome to MetaGold</h2>
+              <input
+                type="email"
+                placeholder="Enter your E-mail address"
+                className="mobile-input"
+                value={mobile}
+                onChange={(e) => setMobile(e.target.value)}
+              />
+              <div className="checkbox-container">
+                <input type="checkbox" id="creditAccess" />
+                <label htmlFor="creditAccess" required >
+                  Allow MetaGold to access your credit report from RBI approved companies to give you the best loan offers.
+                </label>
+              </div>
+              <button className="next-btn" onClick={handleGetStarted}>Next</button>
+              <p className="popup-footer">
+                We'll text you to confirm your number. Standard message and data rates apply. Terms & conditions apply.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
+export default Sellgold;

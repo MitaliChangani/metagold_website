@@ -1,0 +1,76 @@
+/* Container styling */
+.wallet-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  background-color: #fdfdfd;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Header styles */
+.wallet-container h2,
+.wallet-container h3 {
+  text-align: center;
+  color: #222;
+  margin-bottom: 20px;
+}
+
+/* Error message */
+.wallet-container p {
+  font-size: 16px;
+  color: #333;
+}
+
+/* Wallet info */
+.wallet-info {
+  margin-bottom: 30px;
+}
+
+.wallet-info p {
+  font-size: 18px;
+  margin: 10px 0;
+  color: #444;
+}
+
+/* Table styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 15px;
+  background-color: white;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+}
+
+thead {
+  background-color: #f5f5f5;
+}
+
+th, td {
+  padding: 12px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+th {
+  font-weight: bold;
+  color: #333;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+tbody tr:hover {
+  background-color: #eef6ff;
+}
+
+/* No transaction row */
+td[colspan="5"] {
+  color: #888;
+  font-style: italic;
+  padding: 20px;
+}

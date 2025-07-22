@@ -1,85 +1,180 @@
-.login-sidebar {
+.sell-gold-section {
+    display: flex;
+    justify-content: space-between;
+    padding: 4rem 2rem;
+    background-color: #0c0b23;
+    color: #fff;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.sell-left {
+    flex: 1;
+    min-width: 280px;
+}
+
+.sell-left .money-image {
+    width: 160px;
+    margin-bottom: 1.5rem;
+}
+
+.sell-left h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.sell-left p {
+    color: #9ed9ff;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    max-width: 400px;
+}
+
+.features {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #c9c9d2;
+}
+
+.feature-item img {
+    height: 24px;
+    width: 24px;
+}
+
+.sell-right {
+    flex: 1;
+    min-width: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-card {
+    background-color: #1c1831;
+    border-radius: 1rem;
+    padding: 3rem;
+    text-align: center;
+    width: 100%;
+    max-width: 350px;
+}
+
+.login-card .login-icon {
+    height: 60px;
+    margin-bottom: 1.5rem;
+}
+
+.login-card h3 {
+    font-size: 1.2rem;
+    color: #bcb3d4;
+    margin-bottom: 0.5rem;
+}
+
+.login-card p {
+    color: #a09db6;
+    font-size: 0.9rem;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .sell-gold-section {
+        flex-direction: column;
+        padding: 2rem 1rem;
+    }
+
+    .login-card {
+        padding: 2rem;
+    }
+}
+.popup-overlay {
   position: fixed;
   top: 0;
-  right: -100%;
-  height: 100vh;
-  width: 360px;
-  background-color: #0d0620;
-  color: white;
-  padding: 30px;
-  transition: right 0.4s ease-in-out;
-  z-index: 9999;
-  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
-}
-
-.login-sidebar.show {
+  left: 0;
   right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.close-btn {
+.popup-modal {
+  background: #0e0722;
+  color: white;
+  padding: 30px 25px;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 15px;
+  position: relative;
+  text-align: center;
+}
+
+.popup-close {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  font-size: 26px;
+  top: 12px;
+  right: 15px;
   background: none;
   border: none;
-  color: white;
+  font-size: 24px;
+  color: #aaa;
   cursor: pointer;
 }
 
-.login-content {
-  margin-top: 80px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+.popup-icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 15px;
 }
 
-.jar-icon {
-  width: 60px;
-  height: 60px;
-  align-self: center;
-  margin-bottom: 10px;
+.popup-content h2 {
+  margin-bottom: 20px;
 }
 
-h2 {
-  text-align: center;
-  font-size: 20px;
-  font-weight: 600;
-}
-
-.input-field {
-  padding: 14px 16px;
-  border-radius: 10px;
-  border: none;
-  outline: none;
+.mobile-input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #5536ff;
+  border-radius: 12px;
   font-size: 16px;
-  box-shadow: 0 0 5px rgba(136, 92, 255, 0.4);
+  margin-bottom: 15px;
+  outline: none;
 }
 
-.checkbox-section {
+.checkbox-container {
   display: flex;
-  gap: 10px;
   align-items: flex-start;
-  font-size: 13px;
+  gap: 8px;
+  font-size: 14px;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.checkbox-container input {
+  margin-top: 4px;
 }
 
 .next-btn {
+  width: 100%;
   padding: 12px;
-  border: none;
-  background-color: #7a4df5;
+  background: #7645ff;
   color: white;
-  font-weight: bold;
+  border: none;
   font-size: 16px;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
+  margin-bottom: 12px;
 }
 
-.terms-text {
+.popup-footer {
   font-size: 12px;
-  color: #bbb;
-}
-
-.link {
-  color: #caaeff;
-  cursor: pointer;
+  color: #aaa;
+  margin-top: 5px;
 }
