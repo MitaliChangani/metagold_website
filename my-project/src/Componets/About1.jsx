@@ -7,13 +7,9 @@ import withs from '../assets/with.svg'
 import settings from '../assets/settings.svg'
 import aero from '../assets/aero.svg'
 import './About1.css';
-<<<<<<< HEAD
 
-
-
-=======
 import Register from './Register';
->>>>>>> 7603448e8f76bd5764f7d506d67531df0f217379
+
 const About1 = ({ amount, goldInGrams, goldPrice, formattedTime }) => {
   const navigate = useNavigate();
   const handleGetStarted = () => {
@@ -28,7 +24,8 @@ const About1 = ({ amount, goldInGrams, goldPrice, formattedTime }) => {
               "Buy and Sell <span className="highlight">24K gold!</span> Instantly. Securely. Smartly."
             </h1>
 
-            <button className="start-saving">Get Started</button>
+            <button className="start-saving" onClick={handleGetStarted}>Get Started</button>
+
 
             <div className="powered-rating">
               <p className="powered">
@@ -105,7 +102,7 @@ const About1 = ({ amount, goldInGrams, goldPrice, formattedTime }) => {
             Trading on MetaGold: <span className="highlight">It's delightful.</span>
           </h1>
 
-<<<<<<< HEAD
+
           <div className="cards">
             {/* Card 1 */}
             <div className="card1">
@@ -117,10 +114,9 @@ const About1 = ({ amount, goldInGrams, goldPrice, formattedTime }) => {
                     <div className="method">
                       <div className="circle purple">पे</div>
                       <p>PhonePe</p>
-=======
-          <button className="start-saving" onClick={handleGetStarted}>
-        Get Started
-      </button>
+       <section>
+          <button className="start-saving">Get Started</button>
+
 
           <div className="powered-rating">
             <p className="powered">
@@ -135,16 +131,8 @@ const About1 = ({ amount, goldInGrams, goldPrice, formattedTime }) => {
             </div>
           </div>
         </section>
-        <section>
-                    <div className="powered-rating">
-                        <p className="powered">Powered by <img src={upi} alt="UPI" />
-                        </p>
-                        <div className="rating">
-                            <p>Rated <strong>4.7</strong></p>
-                            <span>⭐️⭐️⭐️⭐️⭐️½</span>
-                            <span>by <strong>3.5 Crore</strong> users</span>
-                        </div>
->>>>>>> 7603448e8f76bd5764f7d506d67531df0f217379
+      
+
                     </div>
                     <div className="method">
                       <div className="circle white">paytm</div>

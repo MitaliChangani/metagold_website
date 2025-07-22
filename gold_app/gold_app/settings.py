@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'core',
     'corsheaders',
+    'django.contrib.sites',
 
 ]
 
@@ -68,22 +69,17 @@ CORS_ALLOWED_ORIGINS = [
 
 CORS_ALLOW_CREDENTIALS = True
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # React frontend
-]
-
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:5173"
-]
 
 SIMPLE_JWT = {
-    "AUTH_COOKIE": "access_token",  # Cookie name
-    "AUTH_COOKIE_SECURE": True,     # Use True in production with HTTPS
-    "AUTH_COOKIE_HTTP_ONLY": True,  # Prevent JavaScript access
-    "AUTH_COOKIE_SAMESITE": "Lax",  # Or "Strict" or "None"
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "AUTH_COOKIE": "access_token",
+    "AUTH_COOKIE_SECURE": True,
+    "AUTH_COOKIE_HTTP_ONLY": True,
+    "AUTH_COOKIE_PATH": "/",
+    "AUTH_COOKIE_SAMESITE": "Lax",
 }
+
 
 ROOT_URLCONF = 'gold_app.urls'
 

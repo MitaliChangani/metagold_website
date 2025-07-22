@@ -38,7 +38,7 @@ const Header = () => {
             <span>Features</span>
             <ul className="dropdown-menu">
                <li><Link to="#">Transaction History</Link></li>
-              <li><Link to="#">Wallet</Link></li>
+              <li><Link to="/wallet">Wallet</Link></li>
               <li><Link to="/buygold">Buy Gold</Link></li>
               <li><Link to="/sellgold">Sell Gold</Link></li>
             </ul>

@@ -80,7 +80,7 @@ function Footer() {
                 <hr className="divider" />
 
                 <p className="copyright">
-                    ©BusinessBuddy®India Pvt.Ltd.
+                    ©BusinessBuddy® India Pvt.Ltd.
                 </p>
             </footer>
         </div>

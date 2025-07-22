@@ -1,99 +1,52 @@
-/* Container */
+/* src/Components/Register.css */
 .register-container {
   max-width: 400px;
-  margin: 5rem auto;
-  padding: 2.5rem;
-  background-color: #1f1f2f;
+  margin: 60px auto;
+  padding: 30px;
+  background-color: #fff;
+  border: 1px solid #ddd;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  color: #fff;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Heading */
 .register-container h2 {
   text-align: center;
-  margin-bottom: 1.5rem;
-  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
 }
 
-/* Input Fields */
-.register-container input[type="text"],
-.register-container input[type="email"],
-.register-container input[type="password"] {
+.register-container input {
   width: 100%;
-  padding: 0.8rem;
-  margin: 0.6rem 0;
-  border: none;
-  border-radius: 6px;
-  background-color: #2b2b40;
-  color: #fff;
-  font-size: 1rem;
-  transition: all 0.3s ease;
+  padding: 12px;
+  margin: 10px 0;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
 }
 
-.register-container input:focus {
-  outline: none;
-  background-color: #343454;
-  box-shadow: 0 0 0 2px #5c7cfa;
-}
-
-/* Button */
 .register-container button {
   width: 100%;
-  padding: 0.9rem;
-  margin-top: 1rem;
-  background-color: #5c7cfa;
-  color: #fff;
+  padding: 12px;
+  margin-top: 15px;
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
   border: none;
-  border-radius: 6px;
-  font-size: 1rem;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  font-size: 16px;
 }
 
 .register-container button:hover {
-  background-color: #4a66d6;
-}
-
-/* Messages */
-.success-msg,
-.error-msg {
-  text-align: center;
-  font-size: 0.95rem;
-  margin-bottom: 1rem;
-  padding: 0.5rem;
-  border-radius: 6px;
+  background-color: #0056b3;
 }
 
 .success-msg {
-  background-color: #2e7d32;
-  color: #c8f7c5;
+  color: green;
+  text-align: center;
 }
 
 .error-msg {
-  background-color: #c62828;
-  color: #ffdada;
-}
-
-/* Responsive */
-@media (max-width: 480px) {
-  .register-container {
-    padding: 1.5rem;
-    margin: 3rem 1rem;
-  }
-
-  .register-container h2 {
-    font-size: 1.6rem;
-  }
-}
-
-.login-link{
+  color: red;
   text-align: center;
-  margin-top: 5px;
-}
-
-.login-link a{
-  color: white;
-
 }

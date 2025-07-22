@@ -1,71 +1,49 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+// src/Components/Register.jsx
+import React, { useState } from "react";
+import axios from "../api/axios";  // ⬅️ Better: import from your axiosInstance
 import './Register.css';
+import { useNavigate } from 'react-router-dom';
 
-const Register = () => {
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  });
-
-  const [message, setMessage] = useState('');
+export default function Register() {
+  const [form, setForm] = useState({ username: '', email: '', password: '', confirmPassword: '' });
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setForm({ ...form, [e.target.name]: e.target.value });
+    setError('');
+    setSuccess('');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match.");
+    if (form.password !== form.confirmPassword) {
+      setError("❌ Passwords do not match");
       return;
     }
 
-    setLoading(true);
-    setError('');
-    setMessage('');
-
     try {
-      const response = await axios.post('http://localhost:8000/api/register/', {
-        username: formData.username,
-        email: formData.email,
-        password: formData.password,
+      setLoading(true);
+      const res = await axios.post("register/", {
+        username: form.username,
+        email: form.email,
+        password: form.password
       });
 
-      localStorage.setItem('access', response.data.access);
-      localStorage.setItem('refresh', response.data.refresh);
-
-      setMessage("Registration successful!");
-      setFormData({
-        username: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-      });
-
-      // Optional: Redirect to login after 1.5s
+      setSuccess(res.data.message || "✅ Registration successful");
       setTimeout(() => {
-        window.location.href = "/login";
+        navigate('/login'); // Redirect to login after success
       }, 1500);
-
     } catch (err) {
-      console.error("Registration error:", err);
-      const errorData = err.response?.data;
-      let errorMsg = "Registration failed.";
-
-      if (errorData) {
-        if (errorData.username) errorMsg = errorData.username;
-        else if (errorData.email) errorMsg = errorData.email;
-        else if (errorData.password) errorMsg = errorData.password;
-        else if (errorData.message) errorMsg = errorData.message;
-      }
-
-      setError(Array.isArray(errorMsg) ? errorMsg[0] : errorMsg);
+      const data = err.response?.data;
+      let errorMsg = "❌ Registration failed";
+      if (typeof data === 'string') errorMsg = data;
+      else if (data?.error) errorMsg = data.error;
+      else if (data?.username) errorMsg = data.username[0];
+      setError(errorMsg);
     } finally {
       setLoading(false);
     }
@@ -73,40 +51,39 @@ const Register = () => {
 
   return (
     <div className="register-container">
-      <h2>Register</h2>
-      {message && <p className="success-msg">{message}</p>}
-      {error && <p className="error-msg">{error}</p>}
-
       <form onSubmit={handleSubmit}>
+        <h2>Register</h2>
+        {success && <p className="success-msg">{success}</p>}
+        {error && <p className="error-msg">{error}</p>}
+        
         <input
-          type="text"
           name="username"
           placeholder="Username"
-          value={formData.username}
+          value={form.username}
           onChange={handleChange}
           required
         />
         <input
-          type="email"
           name="email"
+          type="email"
           placeholder="Email"
-          value={formData.email}
+          value={form.email}
           onChange={handleChange}
           required
         />
         <input
-          type="password"
           name="password"
+          type="password"
           placeholder="Password"
-          value={formData.password}
+          value={form.password}
           onChange={handleChange}
           required
         />
         <input
-          type="password"
           name="confirmPassword"
+          type="password"
           placeholder="Confirm Password"
-          value={formData.confirmPassword}
+          value={form.confirmPassword}
           onChange={handleChange}
           required
         />
@@ -114,10 +91,8 @@ const Register = () => {
           {loading ? "Registering..." : "Register"}
         </button>
         <p className="login-link">
-          Already have an account? <a href="/login">Login</a></p>
+          Already have an account? <a href="/login">Login here</a></p>
       </form>
     </div>
   );
-};
-
-export default Register;
+}

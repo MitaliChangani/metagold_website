@@ -1,56 +1,47 @@
 from rest_framework import serializers
-from .models import UserProfile, Transaction, BuyGold, SellGold, GoldHistory
 from django.contrib.auth.models import User
+from .models import UserProfile, Transaction, BuyGold, SellGold
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['id', 'username', 'email']
-
+# UserProfile Serializer
 class UserProfileSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
-
     class Meta:
         model = UserProfile
         fields = '__all__'
+        read_only_fields = ['user']
 
+
+# Transaction Serializer
 class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
         fields = '__all__'
 
+
+# BuyGold Serializer (nested writeable transaction)
 class BuyGoldSerializer(serializers.ModelSerializer):
+    transaction = TransactionSerializer()
+
     class Meta:
         model = BuyGold
-        fields = '__all__'
-
-class SellGoldSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SellGold
-        fields = '__all__'
-
-class GoldHistorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = GoldHistory
-        fields = '__all__'
-
-class RegisterSerializer(serializers.ModelSerializer):
-    confirm_password = serializers.CharField(write_only=True)
-    password = serializers.CharField(write_only=True)
-
-    class Meta:
-        model = User
-        fields = ['username', 'email', 'password', 'confirm_password']
-
-    def validate(self, data):
-        if data['password'] != data['confirm_password']:
-            raise serializers.ValidationError("Passwords do not match.")
-        return data
+        fields = ['id', 'transaction']
 
     def create(self, validated_data):
-        validated_data.pop('confirm_password')
-        return User.objects.create_user(
-            username=validated_data['username'],
-            email=validated_data['email'],
-            password=validated_data['password']
-        )
+        transaction_data = validated_data.pop('transaction')
+        transaction = Transaction.objects.create(**transaction_data)
+        buy_gold = BuyGold.objects.create(transaction=transaction)
+        return buy_gold
+
+
+# SellGold Serializer (nested writeable transaction)
+class SellGoldSerializer(serializers.ModelSerializer):
+    transaction = TransactionSerializer()
+
+    class Meta:
+        model = SellGold
+        fields = ['id', 'transaction']
+
+    def create(self, validated_data):
+        transaction_data = validated_data.pop('transaction')
+        transaction = Transaction.objects.create(**transaction_data)
+        sell_gold = SellGold.objects.create(transaction=transaction)
+        return sell_gold

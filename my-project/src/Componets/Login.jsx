@@ -1,6 +1,7 @@
+// src/Components/Login.jsx
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import axios from "../api/axios"; // Your configured Axios instance
 import './Login.css';
 
 const Login = () => {
@@ -10,20 +11,23 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent default form submit
+
     try {
-      const response = await axios.post('http://localhost:8000/api/token/', {
-        username,
-        password,
-      });
+      await axios.post(
+        'login/',
+        { username, password },
+        { withCredentials: true }  // ✅ IMPORTANT for cookie-based JWT
+      );
 
-      localStorage.setItem('access', response.data.access);
-      localStorage.setItem('refresh', response.data.refresh);
-
-      // Redirect to home
-      navigate('/About1');
+      // ✅ On success, redirect user
+      navigate('/About1'); // Change route as needed
     } catch (err) {
-      setError('Invalid credentials or server error.');
+      const res = err.response?.data;
+      let msg = 'Login failed. Please try again.';
+      if (typeof res === 'string') msg = res;
+      else if (res?.error) msg = res.error;
+      setError(msg);
     }
   };
 
