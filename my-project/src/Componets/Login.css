@@ -1,31 +1,43 @@
-/* Full-screen dark background */
 body {
   margin: 0;
+  
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #0f0638;
 }
 
 .login-container {
-  height: 100vh;
+  height: 70vh;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #0f0638;
+  padding: 1rem;
 }
 
 .login-box {
   background-color: #202049;
   padding: 40px 30px;
   border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   width: 100%;
   max-width: 400px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .login-box h2 {
   color: #ffffff;
   margin-bottom: 20px;
+  font-size: 1.8rem;
+}
+
+.login-box form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
 }
 
 .login-box input {
@@ -73,4 +85,56 @@ body {
 
 .register-link a:hover {
   text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .login-container{
+    height: 50vh;
+  }
+  .login-box {
+    padding: 30px 20px;
+  }
+
+  .login-box h2 {
+    font-size: 1.6rem;
+  }
+
+  .login-box input,
+  .login-box button {
+    font-size: 13px;
+    padding: 10px;
+  }
+}
+@media screen and (max-width:1100px){
+  .login-container{
+    height: 50vh;
+    padding-top: 5%;
+    margin-top: 5%;
+  }
+}
+  
+
+@media (max-width: 480px) {
+  .login-container{
+    height: 50vh;
+  }
+  .login-box {
+    padding: 25px 15px;
+    border-radius: 8px;
+  }
+
+  .login-box h2 {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+  }
+
+  .login-box input,
+  .login-box button {
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  .register-link {
+    font-size: 13px;
+  }
 }

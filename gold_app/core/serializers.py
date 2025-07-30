@@ -10,38 +10,27 @@ class UserProfileSerializer(serializers.ModelSerializer):
         read_only_fields = ['user']
 
 
-# Transaction Serializer
+# BuyGold Serializer (nested writeable transaction)
+class BuyGoldSerializer(serializers.ModelSerializer):
+    user = serializers.CharField(source='user.username', read_only=True)
+    class Meta:
+        model = BuyGold
+        fields = '__all__'
+        read_only_fields = ['user', 'is_approved', 'timestamp']
+
+class SellGoldSerializer(serializers.ModelSerializer):
+    user = serializers.CharField(source='user.username', read_only=True)
+    class Meta:
+        model = SellGold
+        fields = '__all__'
+        read_only_fields = ['user', 'is_approved', 'timestamp']
+
+
+
+from rest_framework import serializers
+from .models import Transaction
+
 class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
-        fields = '__all__'
-
-
-# BuyGold Serializer (nested writeable transaction)
-class BuyGoldSerializer(serializers.ModelSerializer):
-    transaction = TransactionSerializer()
-
-    class Meta:
-        model = BuyGold
-        fields = ['id', 'transaction']
-
-    def create(self, validated_data):
-        transaction_data = validated_data.pop('transaction')
-        transaction = Transaction.objects.create(**transaction_data)
-        buy_gold = BuyGold.objects.create(transaction=transaction)
-        return buy_gold
-
-
-# SellGold Serializer (nested writeable transaction)
-class SellGoldSerializer(serializers.ModelSerializer):
-    transaction = TransactionSerializer()
-
-    class Meta:
-        model = SellGold
-        fields = ['id', 'transaction']
-
-    def create(self, validated_data):
-        transaction_data = validated_data.pop('transaction')
-        transaction = Transaction.objects.create(**transaction_data)
-        sell_gold = SellGold.objects.create(transaction=transaction)
-        return sell_gold
+        fields = ['transaction_type', 'gold_amount', 'rupee_amount', 'gold_price_per_gram', 'created_at']

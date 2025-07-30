@@ -1,9 +1,9 @@
 import React from 'react'
 import googleplay from '../assets/googleplay.png'
-import appstore from '../assets/appstore.jpg'
+import appstore from '../assets/appstore.png'
 import logo from '../assets/logo.png'
 import facebook from '../assets/facebook.png'
-import instagram from '../assets/instagram.jpg'
+import instagram from '../assets/instagram.png'
 import linkedin from '../assets/linkedin.png'
 import twitter from '../assets/twitter.png'
 import youtube from '../assets/youtube.png'
@@ -12,6 +12,7 @@ function Footer() {
     return (
 
         <div>
+        <hr/>
             <footer className="footer">
                 <div className="footer-top">
                     <div className="footer-left">
@@ -24,37 +25,35 @@ function Footer() {
                         </p>
                         <div className="social-icons">
                             <img src={facebook} alt="Facebook" />
-                            <img src={instagram} alt="Instagram" />
+                            <img src={instagram} alt="Instagram"/>
                             <img src={linkedin} alt="LinkedIn" />
-                            <img src={twitter} alt="Twitter" />
-                            <img src={youtube} alt="YouTube" />
+                            <img src={twitter} alt="Twitter" className='twit' />
+                            <img src={youtube} alt="YouTube" className='you'/>
+                            <img src={googleplay} alt="" style={{height: 40, width: 60, marginLeft: -7}}/>
+                            <img src={appstore} alt="" style={{height: 40, width: 50, marginBottom: -1, marginLeft: -9}}/>
                         </div>
 
-                        <div className="app-buttons">
-                            <img src={googleplay} alt="" />
-                            <img src={appstore} alt="" />
-                        </div>
                     </div>
 
                     <div className="footer-links">
                         <div>
                             <h4>MetaGold</h4>
                             <ul>
-                                <li className="disabled">Homepage</li>
-                                <li>About us</li>
-                                <li>Daily Savings</li>
-                                <li>Round-offs</li>
-                                <li>Careers</li>
+                                <a href="/About1"><li>Homepage</li></a>
+                                <a href="/About2"><li>About us</li></a>
+                                <a href="/About1"><li>Daily Savings</li></a>
+                                <a href="/About1"><li>Round-offs</li></a>
+                                <a href="/About1"><li>Careers</li></a>
                             </ul>
                         </div>
                         <div>
                             <h4>Explore</h4>
                             <ul>
-                                <li>What is 24k Gold?</li>
-                                <li>Check Gold Price</li>
-                                <li>FAQs</li>
-                                <li>Blogs</li>
-                                <li>Instant Loan</li>
+                                <a href="/help"><li>What is 24k Gold?</li></a>
+                                <a href="/Login"><li>Check Gold price</li></a>
+                                <a href="/help"><li>FAQ's</li></a>
+                                <a href="/Blog"><li>Blogs</li></a>
+                                <a href="/Buygold"><li>Instant Loan</li></a>
                             </ul>
                         </div>
                     </div>

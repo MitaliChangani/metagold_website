@@ -1,77 +1,93 @@
-
+/* === Header Wrapper === */
 header {
+  height: 70px;
   width: 100%;
-  background-color: black;
-  color: #fff;
-  padding: 0.05rem;
- top: 0%;
+  background-color: rgb(232, 195, 102);
+  padding: 0.5rem 1rem;
   position: fixed;
+  top: 0;
+  left: 0;
   z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
 }
 
+/* === Navbar Layout === */
 .navbar {
-
   display: flex;
   justify-content: space-around;
   align-items: center;
-  flex-wrap: wrap;
+  max-width: 1300px;
+  margin-top: -29px;
   position: relative;
 }
 
+/* === Logo === */
 .nav-left {
   display: flex;
   align-items: center;
 }
 
 .logo {
-  height: 40px;
-  margin-left: -50px;
-  margin-right: 790px;
-
+  height: 70px;
+  width: auto;
+  margin-right: 90px;
 }
 
+/* === Hamburger === */
 .hamburger {
   display: none;
   flex-direction: column;
   cursor: pointer;
   background: none;
   border: none;
-  padding: 0;
-  margin-left: 1rem;
 }
 
 .bar {
   height: 3px;
   width: 25px;
-  background-color: white;
+  background-color: black;
   margin: 4px 0;
   border-radius: 2px;
 }
 
-/* Navigation menu */
+/* === Nav Menu === */
 .nav-menu {
-  padding: 0.5px;
-  top: 0%;
   display: flex;
   align-items: center;
   list-style: none;
   gap: 2rem;
+  margin: 0;
+  padding: 0;
 }
 
-.nav-menu li :hover{
-  color: darkgoldenrod;
-}
 .nav-menu li {
   position: relative;
-  display: flex;
+}
+
+.nav-menu li a,
+.nav-menu li span {
+  color: black;
+  color: white;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 8px 12px;
+  transition: color 0.3s ease;
+  display: block;
 }
 
 .nav-menu li span {
   cursor: pointer;
 }
 
+.nav-menu li:hover > a,
+.nav-menu li:hover > span {
+  color: darkgoldenrod;
+}
+
+/* === Buttons === */
 .nav-menu li .btn {
-  /* background: linear-gradient(to right, #8a4fff, #5f3dc4); */
   color: white;
   background-color: darkgoldenrod;
   padding: 10px 18px;
@@ -79,39 +95,37 @@ header {
   border: none;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  transition: background 0.3s ease-in-out;
 }
 
 .nav-menu li .btn:hover {
-  background: blue;
-  display: flex;
+  background-color: #ff9e02;
+  border: 1px solid black;
 }
 
+/* === Dropdown === */
 .dropdown-menu {
   position: absolute;
   top: 100%;
   left: 0;
-  /* background-color: #2b1a5d; */
+  background-color: #2b1a5d;
   padding: 10px 0;
   border-radius: 6px;
   display: none;
   flex-direction: column;
-  min-width: 160px;
+  min-width: 180px;
   z-index: 999;
 }
 
 .dropdown:hover .dropdown-menu {
   display: flex;
   list-style: none;
+  
 }
 
 .dropdown-menu li {
   padding: 8px 16px;
   white-space: nowrap;
-}
-
-.dropdown-menu li:hover {
-  display: flex;
 }
 
 .dropdown-menu a {
@@ -120,48 +134,94 @@ header {
   font-size: 0.9rem;
 }
 
-/* Responsive Styles */
-@media screen and (max-width: 768px) {
+/* === Responsive Styles === */
+
+/* ✅ For Tablet and Mobile (≤ 1024px) */
+@media (max-width: 1024px) {
+  /* Show hamburger icon */
   .hamburger {
     display: flex;
+    margin-left: 47vw;
   }
 
+  /* Collapse menu into vertical mobile nav */
   .nav-menu {
-    flex-direction: column;
-    width: 100%;
-    background-color: #1b0a47;
     position: absolute;
     top: 100%;
     left: 0;
+    right: 0;
+    background-color: black;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem;
     display: none;
-    padding: 1rem 0;
   }
 
   .nav-menu.active {
     display: flex;
   }
+  .navbar{
+    margin-top: -58px;
+  }
 
   .nav-menu li {
     width: 100%;
-    text-align: center;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-menu li .btn {
+    align-self: flex-start;
   }
 
   .dropdown-menu {
     position: static;
-    background-color: #2b1a5d;
+    background: none;
+    padding: 0.5rem 1rem;
     display: none;
-    width: 100%;
+    flex-direction: column;
   }
 
-  .dropdown:hover .dropdown-menu {
-    display: block;
+  .dropdown.open .dropdown-menu {
+    display: flex;
   }
 
-  .dropdown-menu li {
-    padding: 10px;
+   .logo {
+    margin: 0;
+    padding-left: 30%;
+    
+  }
+  header .logo{
+    margin-top: 25%;
+  }
+
+  .navbar {
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-menu {
+    padding: 1rem 0.75rem;
+    gap: 1rem;
   }
 
   .nav-menu li .btn {
-    margin-top: 10px;
+    padding: 8px 14px;
+    font-size: 0.85rem;
+  }
+
+  .logo {
+    height: 32px;
+  }
+
+  .bar {
+    width: 20px;
+    height: 2px;
+  }
+   .navbar{
+    margin-top: -58px;
   }
 }
+ 

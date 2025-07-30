@@ -1,5 +1,5 @@
 
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 
 def home(request):
-    return JsonResponse({'message': 'Welcome to the MetaGold API'})
+    return HttpResponse("<h1>{'message': 'Welcome to the MetaGold API'}<h1/>")

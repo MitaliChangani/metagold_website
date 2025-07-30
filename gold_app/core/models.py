@@ -1,24 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models import DecimalField
+from django.utils import timezone
 
 # User profile with balance
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
-    # Contact & Personal Info
-    full_name = models.CharField(max_length=100, default="")
-    phone_number = models.CharField(max_length=15, default="")
-    address = models.TextField(max_length=500, default="") 
-    city = models.CharField(max_length=50, default="")
-    state = models.CharField(max_length=50, default="")
-    pincode = models.CharField(max_length=10, default="")
-
-    # Balance Info
     gold_balance = models.DecimalField(max_digits=10, decimal_places=4, default=0.0)  # in grams
     rupee_balance = models.DecimalField(max_digits=12, decimal_places=2, default=0.0)
 
     def __str__(self):
-        return f"{self.user.username} ({self.full_name})"
+        return f"{self.user.username}"
 
 # Generic Transaction (buy or sell)
 class Transaction(models.Model):
@@ -38,15 +31,19 @@ class Transaction(models.Model):
 
 # Buy gold (linked to transaction)
 class BuyGold(models.Model):
-    transaction = models.OneToOneField(Transaction, on_delete=models.CASCADE, related_name='buy_details')
-
-    def __str__(self):
-        return f"Buy: {self.transaction}"
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
+    amount_in_rupees = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+    gold_in_grams = models.DecimalField(max_digits=10, decimal_places=4, default=0.0)
+    is_approved = models.BooleanField(default=False)  # admin approval
+    timestamp = models.DateTimeField(default=timezone.now)
+    
 
 # Sell gold (linked to transaction)
 class SellGold(models.Model):
-    transaction = models.OneToOneField(Transaction, on_delete=models.CASCADE, related_name='sell_details')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
+    gold_in_grams = models.DecimalField(max_digits=10, decimal_places=4, default=0.0)
+    amount_in_rupees = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+    is_approved = models.BooleanField(default=False)  # admin approval
+    timestamp = models.DateTimeField(default=timezone.now)
 
-    def __str__(self):
-        return f"Sell: {self.transaction}"
 
