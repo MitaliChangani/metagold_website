@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -157,14 +159,15 @@ WSGI_APPLICATION = 'gold_app.wsgi.application'
 
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'metagold_db',
-        'USER': 'root',
-        'PASSWORD': 'mitali@1*2b*3#',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
+    'default': dj_database_url.config(default=os.environ.get('mysql://root:oofNDzTvdDfpXMlQzTRiTOyJeWILGyDP@maglev.proxy.rlwy.net:59248/railway'))
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'metagold_db',
+    #     'USER': 'root',
+    #     'PASSWORD': 'mitali@1*2b*3#',
+    #     'HOST': 'localhost',
+    #     'PORT': '3306',
+    # }
 }
 
 

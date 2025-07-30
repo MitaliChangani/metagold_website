@@ -2,7 +2,6 @@ services:
   - type: web
     name: metagold-backend
     env: python
-    plan: free
     buildCommand: |
       cd gold_app
       pip install -r requirements.txt
@@ -11,25 +10,4 @@ services:
     envVars:
       - key: DATABASE_URL
         value: mysql://root:oofNDzTvdDfpXMlQzTRiTOyJeWILGyDP@maglev.proxy.rlwy.net:59248/railway
-      - key: DEBUG
-        value: "False"
-      - key: SECRET_KEY
-        generateValue: true
-    autoDeploy: true
-    buildFilter:
-      paths:
-        - gold_app/**
-
-  - type: web
-    name: metagold-frontend
-    env: static
     plan: free
-    buildCommand: |
-      cd my-project
-      npm install
-      npm run build
-    staticPublishPath: my-project/dist
-    autoDeploy: true
-    buildFilter:
-      paths:
-        - my-project/**
