@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Buy from '../assets/Buy.png';
-// import { toast } from 'react-toastify';
 import axios from '../api/axios';
 
 function Buygold() {
@@ -13,8 +12,7 @@ function Buygold() {
   const [transactions, setTransactions] = useState([]);
   const notifiedRef = useRef(false);
 
-  const razorpayKey = "YOUR_PUBLIC_RAZORPAY_KEY";
-
+  const razorpayKey = "DttsFGqzYGKlhsQKPslyTRSH";
   const goldPrice = 10086.03;
 
   const fetchWallet = async () => {
@@ -42,17 +40,15 @@ function Buygold() {
     }
 
     setLoading(true);
-
     try {
       const res = await axios.post('request-buy/', {
-        amount_in_rupees: amount,
-        gold_in_grams: grams,
+        amount_in_rupees: Number(amount),
+        gold_in_grams: Number(grams),
       });
 
       setLatestRequestId(res.data.request_id);
-      notifiedRef.current = false;  // reset notification flag
+      notifiedRef.current = false;
       alert('✅ Buy request sent successfully. Awaiting admin approval.');
-
     } catch (err) {
       console.error(err);
       if (err.response?.data?.detail) {
@@ -66,91 +62,112 @@ function Buygold() {
   };
 
   const initialRazorpayPayment = async () => {
-    try{
-     const res = await axios.post(`/create-razorpay-order/`, {
-      amount: amount,  // Amount in ₹
-    }, { withCredentials: true });
+    const rupees = Number(amount);
+    if (!latestRequestId) {
+      alert("❌ No pending request found. Please confirm the order first.");
+      return;
+    }
+    if (!Number.isFinite(rupees) || rupees < 1) {
+      alert("❌ Enter a valid amount (₹1 or more) before paying.");
+      return;
+    }
 
-      const { order_id, amount, currency } = res.data;
+    try {
+      const res = await axios.post(
+        'create-razorpay-order/',
+        { request_id: latestRequestId, type: 'buy' },
+        {
+          withCredentials: true,
+          headers: { 'Content-Type': 'application/json' }
+        }
+      );
+
+      const { order_id, amount: orderAmount, currency, key } = res.data;
 
       const options = {
-        key: razorpayKey,
-        amount,
+        key: key || razorpayKey,
+        amount: orderAmount,
         currency,
         name: "MetaGold",
         description: "Gold Purchase",
         order_id,
         handler: async function (response) {
-          // You can send payment success to backend here
-          
-          try{
-          await axios.post('/verify-payment/', {
-            request_id: latestRequestId,
-            razorpay_payment_id: response.razorpay_payment_id,
-            razorpay_order_id: response.razorpay_order_id,
-            razorpay_signature: response.razorpay_signature,
-          });
-          alert('🎉 Payment successful and transaction completed!');
-          fetchWallet();
-          fetchTransactions();
-        } catch (err){
-          console.error("Payment verification failed:", err);
-          alert("❌ Payment verified failed. Please contact support.");
-        }
+          try {
+            await axios.post('verify-payment/', {
+              request_id: latestRequestId,
+              type: 'buy',
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_signature: response.razorpay_signature,
+            }, { withCredentials: true });
+
+            alert('🎉 Payment successful and transaction completed!');
+            setMessage('🎉 Payment successful and transaction completed!');
+            setLatestRequestId(null);
+            fetchWallet();
+            fetchTransactions();
+          } catch (err) {
+            console.error("Payment verification failed:", err.response?.data || err);
+            const msg = err.response?.data?.error
+              || (typeof err.response?.data === 'string' ? err.response.data : '')
+              || err.message
+              || 'Please contact support.';
+            alert(`❌ Payment verification failed: ${msg}`);
+          }
         },
         theme: { color: "#ffd700" }
       };
 
-      const rzp = new window.Razorpay(options);
-      rzp.open();
+      const openCheckout = () => new window.Razorpay(options).open();
 
-      } catch (error) {
-      console.error("Payment initiation failed:", error);
-      alert("❌ Could not initiate Razorpay payment.");
+      if (!window.Razorpay) {
+        const script = document.createElement("script");
+        script.src = "https://checkout.razorpay.com/v1/checkout.js";
+        script.async = true;
+        script.onload = openCheckout;
+        script.onerror = () => alert("❌ Could not load Razorpay SDK.");
+        document.body.appendChild(script);
+      } else {
+        openCheckout();
+      }
+    } catch (error) {
+      console.error("Payment initiation failed:", error.response?.status, error.response?.data || error);
+      alert(`❌ Could not initiate payment: ${error.response?.data?.detail || error.message}`);
     }
   };
 
   useEffect(() => {
-    setGrams((amount / goldPrice).toFixed(4));
+    const g = amount / goldPrice;
+    setGrams(Number.isFinite(g) ? Number(g.toFixed(4)) : 0);
   }, [amount]);
 
- useEffect(() => {
-  if (!latestRequestId) return; // Don't start interval if no request ID
+  useEffect(() => {
+    if (!latestRequestId) return;
 
-  const interval = setInterval(async () => {
-    try {
-      const res = await axios.get(`/buy-status/${latestRequestId}/`, {
-        withCredentials: true,
-      });
+    const interval = setInterval(async () => {
+      try {
+        const res = await axios.get(`buy-status/${latestRequestId}/`, {
+          withCredentials: true,
+        });
 
-      const data = res.data;
-      // console.log("Polling approval status:", data);
-
-      if (data.is_approved === true) {
-        alert('✅ Admin approved. Proceeding to payment...');
-        // setLatestRequestId(null);
-        // fetchWallet();         // refresh wallet info
-        // fetchTransactions();   // refresh transaction history
-        // clearInterval(interval); // stop polling
-
-        initialRazorpayPayment();
-
-
+        const data = res.data;
+        if (data.is_approved === true && !notifiedRef.current) {
+          notifiedRef.current = true;
+          alert('✅ Admin approved. Proceeding to payment...');
+          clearInterval(interval);
+          initialRazorpayPayment();
+        }
+      } catch (error) {
+        console.error('Error checking approval status:', error);
+        if (error.response?.status === 401) {
+          alert('Session expired. Please log in again.');
+          clearInterval(interval);
+        }
       }
-    } catch (error) {
-      console.error('Error checking approval status:', error);
+    }, 5000);
 
-      if (error.response?.status === 401) {
-        alert('Session expired. Please log in again.');
-        clearInterval(interval);
-      }
-    }
-  }, 5000); // poll every 5 seconds
-
-  return () => clearInterval(interval); // cleanup on unmount or change
-}, [latestRequestId]); // runs only when latestRequestId changes
-
-  
+    return () => clearInterval(interval);
+  }, [latestRequestId]);
 
   return (
     <div className="gold-saver-container">
@@ -191,7 +208,11 @@ function Buygold() {
               Buy Price: <b>₹{goldPrice}/g</b>
               <span className="validity">Valid for: 04:49</span>
             </div>
-            <button className="confirm-btn" onClick={handleConfirm} disabled={loading}>
+            <button
+              className="confirm-btn"
+              onClick={handleConfirm}
+              disabled={loading || !!latestRequestId}
+            >
               {loading ? "Submitting..." : "Confirm Order"}
             </button>
             {message && <p style={{ marginTop: '12px', color: 'green' }}>{message}</p>}

@@ -21,13 +21,16 @@ class Transaction(models.Model):
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     transaction_type = models.CharField(max_length=4, choices=TRANSACTION_TYPE)
-    gold_amount = models.DecimalField(max_digits=10, decimal_places=4, default=0.0)  # in grams
-    rupee_amount = models.DecimalField(max_digits=12, decimal_places=2, default=0.0)  # in rupees
-    gold_price_per_gram = models.DecimalField(max_digits=10, decimal_places=2)  # price at the time of transaction
+    gold_amount = models.DecimalField(max_digits=10, decimal_places=4, default=0.0)
+    rupee_amount = models.DecimalField(max_digits=12, decimal_places=2, default=0.0)
+    gold_price_per_gram = models.DecimalField(max_digits=10, decimal_places=2)
+    provider_payment_id = models.CharField(max_length=255, blank=True, null=True)
+    provider_order_id = models.CharField(max_length=255, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.user.username} {self.transaction_type} {self.gold_amount}g"
+
 
 # Buy gold (linked to transaction)
 class BuyGold(models.Model):

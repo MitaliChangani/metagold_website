@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 import os
-import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,8 +27,15 @@ SECRET_KEY = 'django-insecure-%(xi!@rc4=a0dsqhpja&o1wu6pe7*##lkt$s&77l8=tmhyh0f&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+]
 
+# ALLOWED_HOSTS =[
+#     'www.metagold.online',
+#     'metagold.online',  # nacked domain
+# ]
 
 # Application definition
 
@@ -159,15 +165,15 @@ WSGI_APPLICATION = 'gold_app.wsgi.application'
 
 
 DATABASES = {
-    'default': dj_database_url.config(default=os.environ.get('mysql://root:oofNDzTvdDfpXMlQzTRiTOyJeWILGyDP@maglev.proxy.rlwy.net:59248/railway'))
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'NAME': 'metagold_db',
-    #     'USER': 'root',
-    #     'PASSWORD': 'mitali@1*2b*3#',
-    #     'HOST': 'localhost',
-    #     'PORT': '3306',
-    # }
+    # 'default': dj_database_url.config(default=os.environ.get('mysql://root:oofNDzTvdDfpXMlQzTRiTOyJeWILGyDP@maglev.proxy.rlwy.net:59248/railway'))
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'metagold_db',
+        'USER': 'root',
+        'PASSWORD': 'mitali@1*2b*3#',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
 }
 
 
@@ -213,5 +219,5 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-RAZORPAY_KEY_ID = "rzp_test_YourKeyHere"
-RAZORPAY_KEY_SECRET = "your_secret_here"
+RAZORPAY_KEY_ID = "rzp_test_OpXW1lnGMl3ijD"
+RAZORPAY_KEY_SECRET = "DttsFGqzYGKlhsQKPslyTRSH"

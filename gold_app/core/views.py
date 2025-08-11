@@ -28,12 +28,12 @@ from django.shortcuts import get_object_or_404
 from .models import UserProfile, Transaction, BuyGold, SellGold
 from decimal import Decimal
 from django.utils import timezone
-
+from django.conf import settings
 
 import razorpay
 
-RAZORPAY_KEY_ID = "rzp_test_XXXXXXX"
-RAZORPAY_KEY_SECRET = "YYYYYYYYYYYY"
+RAZORPAY_KEY_ID = 'rzp_test_OpXW1lnGMl3ijD'
+RAZORPAY_KEY_SECRET = 'DttsFGqzYGKlhsQKPslyTRSH'
 
 razorpay_client = razorpay.Client(auth=(RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET))
 
@@ -290,19 +290,27 @@ def approve_buy_gold(request, request_id):
 @api_view(['POST'])
 @permission_classes([IsAdminUser])
 def approve_sell_gold(request, request_id):
+    # Get sell request that hasn't been approved yet
     sell_request = get_object_or_404(SellGold, id=request_id, is_approved=False)
 
     if sell_request.is_approved:
         return Response({'error': 'Sell request already approved'}, status=400)
 
+    # Get user profile of the seller
     profile = get_object_or_404(UserProfile, user=sell_request.user)
 
+    # Get admin profile
     try:
         admin_user = User.objects.get(username='dell')
+    except User.DoesNotExist:
+        return Response({'error': 'Admin user not found'}, status=404)
+
+    try:
         admin_profile = UserProfile.objects.get(user=admin_user)
     except UserProfile.DoesNotExist:
         return Response({'error': 'Admin profile not found'}, status=404)
 
+    # Validation: check balances
     if profile.gold_balance < sell_request.gold_in_grams:
         return Response({'error': 'Insufficient gold balance'}, status=400)
 
@@ -310,15 +318,25 @@ def approve_sell_gold(request, request_id):
         return Response({'error': 'Admin has insufficient rupee balance'}, status=400)
 
     with db_transaction.atomic():
-        # Update user wallet
+        # Lock rows to avoid race conditions
+        profile = UserProfile.objects.select_for_update().get(user=sell_request.user)
+        admin_profile = UserProfile.objects.select_for_update().get(user=admin_user)
+
+        # Deduct gold from seller and add rupees
         profile.gold_balance -= sell_request.gold_in_grams
         profile.rupee_balance += sell_request.amount_in_rupees
         profile.save()
 
-        # Deduct rupees and add gold to admin
+        # Deduct rupees from admin and add gold
         admin_profile.rupee_balance -= sell_request.amount_in_rupees
         admin_profile.gold_balance += sell_request.gold_in_grams
         admin_profile.save()
+
+        # Calculate price safely
+        price_per_gram = (
+            sell_request.amount_in_rupees / sell_request.gold_in_grams
+            if sell_request.gold_in_grams else 0
+        )
 
         # Record transaction
         Transaction.objects.create(
@@ -326,21 +344,24 @@ def approve_sell_gold(request, request_id):
             transaction_type='SELL',
             gold_amount=sell_request.gold_in_grams,
             rupee_amount=sell_request.amount_in_rupees,
-            gold_price_per_gram=sell_request.amount_in_rupees / sell_request.gold_in_grams,
+            gold_price_per_gram=price_per_gram,
             created_at=sell_request.timestamp
         )
 
+        # Mark request as approved
         sell_request.is_approved = True
         sell_request.save()
 
     print("✅ Admin approved sell request ID:", request_id)
     return Response({
         'message': 'Sell request approved',
+        'status': 'approved',
         'wallet': {
             'rupee_balance': str(profile.rupee_balance),
             'gold_balance': str(profile.gold_balance)
         }
     }, status=200)
+
 
 # Check status of a specific buy request
 @api_view(['GET'])
@@ -383,6 +404,7 @@ def get_sell_requests(request):
     return Response(serializer.data)
 
 
+
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -413,9 +435,14 @@ def get_my_sell_requests(request):
     return Response(serializer.data)
 
 
+from decimal import Decimal, InvalidOperation
+from django.conf import settings
+from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
-from django.shortcuts import get_object_or_404
+from rest_framework.response import Response
+import razorpay
+
 from .models import BuyGold, SellGold
 
 class CreateRazorpayOrder(APIView):
@@ -425,143 +452,234 @@ class CreateRazorpayOrder(APIView):
         request_id = request.data.get("request_id")
         order_type = request.data.get("type")  # 'buy' or 'sell'
 
-        if not request_id or order_type not in ['buy', 'sell']:
-            return JsonResponse({"error": "Missing or invalid parameters"}, status=400)
+        if not request_id or order_type not in ("buy", "sell"):
+            return Response(
+                {"detail": "Missing or invalid parameters: 'request_id' and 'type' are required."},
+                status=400
+            )
 
-        if order_type == "buy":
-            gold_request = get_object_or_404(BuyGold, id=request_id, user=request.user)
-        else:
-            gold_request = get_object_or_404(SellGold, id=request_id, user=request.user)
+        Model = BuyGold if order_type == "buy" else SellGold
+        gold_request = get_object_or_404(Model, id=request_id, user=request.user)
 
-        if not gold_request.is_approved:
-            return JsonResponse({"error": "Request not approved"}, status=403)
+        if not getattr(gold_request, "is_approved", False):
+            return Response({"detail": "Request not approved"}, status=403)
 
-        amount = int(gold_request.amount_in_rupees * 100)  # convert INR to paise
-        client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
-        payment = client.order.create({
-            "amount": amount,
-            "currency": "INR",
-            "payment_capture": "1"
-        })
+        try:
+            amount_rupees = Decimal(gold_request.amount_in_rupees)
+            amount_paise = int(amount_rupees * 100)  # INR -> paise
+            if amount_paise < 100:
+                return Response({"detail": "Amount must be at least ₹1 (100 paise)."}, status=400)
+        except (InvalidOperation, TypeError):
+            return Response({"detail": "Invalid amount on request."}, status=400)
 
-        return JsonResponse(payment)
+        try:
+            client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+            order = client.order.create({
+                "amount": amount_paise,
+                "currency": "INR",
+                "payment_capture": 1,
+            })
+        except Exception as e:
+            return Response({"detail": "Failed to create Razorpay order", "error": str(e)}, status=502)
+
+        # Map fields your frontend expects and include public key
+        return Response({
+            "order_id": order.get("id"),
+            "amount": order.get("amount"),
+            "currency": order.get("currency"),
+            "status": order.get("status"),
+            "key": settings.RAZORPAY_KEY_ID,
+        }, status=201)
 
 
 
+from decimal import Decimal, InvalidOperation
+from django.db import transaction
+from django.shortcuts import get_object_or_404
+from django.utils import timezone
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+
+import razorpay
+from django.conf import settings
+
+from .models import BuyGold, SellGold, Transaction, UserProfile  # adjust import paths as needed
+import traceback
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def verify_payment(request):
+    payload = request.data
+
+    # 1) Validate basic payload
+    required = ["request_id", "type", "razorpay_order_id", "razorpay_payment_id", "razorpay_signature"]
+    missing = [k for k in required if not payload.get(k)]
+    if missing:
+        return Response({"error": "Missing required fields", "fields": missing}, status=400)
+
+    order_type = payload.get("type")
+    if order_type not in ("buy", "sell"):
+        return Response({"error": "Invalid type. Expected 'buy' or 'sell'."}, status=400)
+
     try:
-        data = request.data
-        request_id = data.get('request_id')
-        order_type = data.get('type')  # 'buy' or 'sell'
+        request_id = int(payload.get("request_id"))
+    except (TypeError, ValueError):
+        return Response({"error": "request_id must be an integer"}, status=400)
 
-        razorpay_order_id = data.get('razorpay_order_id')
-        razorpay_payment_id = data.get('razorpay_payment_id')
-        razorpay_signature = data.get('razorpay_signature')
+    razorpay_order_id = payload.get("razorpay_order_id")
+    razorpay_payment_id = payload.get("razorpay_payment_id")
+    razorpay_signature = payload.get("razorpay_signature")
 
+    # 2) Verify Razorpay signature early; return 400 on failure
+    try:
         client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
         client.utility.verify_payment_signature({
             "razorpay_order_id": razorpay_order_id,
             "razorpay_payment_id": razorpay_payment_id,
             "razorpay_signature": razorpay_signature
         })
+    except razorpay.errors.SignatureVerificationError:
+        return Response({"error": "Invalid payment signature"}, status=400)
 
-        if order_type == "buy":
-            gold_request = get_object_or_404(BuyGold, id=request_id, user=request.user)
-        else:
-            gold_request = get_object_or_404(SellGold, id=request_id, user=request.user)
+    # 3) Fetch the request object (buy/sell)
+    Model = BuyGold if order_type == "buy" else SellGold
+    gold_request = get_object_or_404(Model, id=request_id, user=request.user)
 
-        if not gold_request.is_approved:
-            return Response({"error": "Request not approved by admin."}, status=403)
+    # Optional consistency check: ensure the order IDs match what you created earlier
+    # if hasattr(gold_request, "razorpay_order_id") and gold_request.razorpay_order_id != razorpay_order_id:
+    #     return Response({"error": "Order ID mismatch"}, status=400)
 
-        profile = request.user.userprofile
+    if not getattr(gold_request, "is_approved", False):
+        return Response({"error": "Request not approved by admin."}, status=403)
 
-        if order_type == "buy":
-            profile.gold_balance += gold_request.gold_in_grams
-            profile.rupee_balance -= gold_request.amount_in_rupees
-            transaction_type = "buy"
-        else:
-            if profile.gold_balance < gold_request.gold_in_grams:
-                return Response({"error": "Not enough gold to sell."}, status=400)
-            profile.gold_balance -= gold_request.gold_in_grams
-            profile.rupee_balance += gold_request.amount_in_rupees
-            transaction_type = "sell"
+    # Idempotency: if already processed, return success without mutating balances again
+    if getattr(gold_request, "processed", False):
+        return Response({"message": "Payment already verified"}, status=200)
 
-        profile.save()
+    # 4) Apply wallet mutation atomically and idempotently
+    try:
+        with transaction.atomic():
+            # Lock profile row to prevent race conditions
+            profile, _ = UserProfile.objects.select_for_update().get_or_create(
+                user=request.user,
+                defaults={"gold_balance": Decimal("0"), "rupee_balance": Decimal("0")}
+            )
 
-        # Create transaction record
-        from .models import Transaction
-        Transaction.objects.create(
-            user=request.user,
-            transaction_type=transaction_type,
-            gold_amount=gold_request.gold_in_grams,
-            rupee_amount=gold_request.amount_in_rupees,
-            gold_price_per_gram=gold_request.amount_in_rupees / gold_request.gold_in_grams
-        )
+            # Coerce to Decimal; validate amounts
+            try:
+                grams = Decimal(gold_request.gold_in_grams)
+                amount = Decimal(gold_request.amount_in_rupees)
+            except (InvalidOperation, TypeError):
+                return Response({"error": "Invalid numeric amounts on request"}, status=400)
 
-        # Delete request to prevent re-use
-        gold_request.delete()
+            if grams <= 0 or amount <= 0:
+                return Response({"error": "Amounts must be greater than zero"}, status=400)
+
+            # Apply balances
+            if order_type == "buy":
+                profile.gold_balance = Decimal(profile.gold_balance) + grams
+                profile.rupee_balance = Decimal(profile.rupee_balance) - amount
+                transaction_type = "buy"
+            else:
+                if Decimal(profile.gold_balance) < grams:
+                    return Response({"error": "Not enough gold to sell."}, status=400)
+                profile.gold_balance = Decimal(profile.gold_balance) - grams
+                profile.rupee_balance = Decimal(profile.rupee_balance) + amount
+                transaction_type = "sell"
+
+            profile.save()
+
+            # Record transaction
+            price_per_gram = amount / grams  # safe due to grams > 0
+            Transaction.objects.create(
+                user=request.user,
+                transaction_type=transaction_type,
+                gold_amount=grams,
+                rupee_amount=amount,
+                gold_price_per_gram=price_per_gram,
+                provider_payment_id=razorpay_payment_id,
+                provider_order_id=razorpay_order_id,
+            )
+
+            # Mark request processed instead of deleting (keeps audit trail + idempotency)
+            setattr(gold_request, "processed", True)
+            if hasattr(gold_request, "processed_at"):
+                gold_request.processed_at = timezone.now()
+            if hasattr(gold_request, "razorpay_payment_id"):
+                gold_request.razorpay_payment_id = razorpay_payment_id
+            gold_request.save()
 
         return Response({"message": "Payment verified and wallet updated"}, status=200)
 
-    except razorpay.errors.SignatureVerificationError:
-        return Response({"error": "Invalid payment signature"}, status=400)
+
     except Exception as e:
+        traceback.print_exc()
         return Response({"error": str(e)}, status=500)
 
 
 
+
+# views.py
+from rest_framework import permissions
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from django.shortcuts import get_object_or_404
+from django.http import Http404
+from decimal import Decimal
 import razorpay
 from django.conf import settings
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import permissions, status
-from .models import SellGold, UserProfile, Transaction
-from django.shortcuts import get_object_or_404
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.decorators import api_view, permission_classes
 
 razorpay_client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
-
 
 class CreateRazorpaySellOrder(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
-        try:
-            request_id = request.data.get("request_id")
-            if not request_id:
-                return Response({"detail": "Request ID missing"}, status=400)
+        request_id = request.data.get("request_id")
+        if not request_id:
+            return Response({"detail": "Request ID missing"}, status=400)
 
-            sell_request = get_object_or_404(SellGold, id=request_id, user=request.user)
+        try:
+            is_admin = bool(getattr(request.user, "is_staff", False) or getattr(request.user, "is_superuser", False))
+            if is_admin:
+                sell_request = get_object_or_404(SellGold, id=request_id)
+            else:
+                sell_request = get_object_or_404(SellGold, id=request_id, user=request.user)
 
             if not sell_request.is_approved:
                 return Response({"detail": "Request not approved by admin."}, status=403)
 
-            try:
-                amount_rupees = float(sell_request.amount_in_rupees)
-                amount_paise = int(amount_rupees * 100)
-            except Exception as e:
-                return Response({"detail": "Invalid amount", "error": str(e)}, status=400)
+            amount_rupees = Decimal(str(sell_request.amount_in_rupees))
+            amount_paise = int(amount_rupees * 100)
+            if amount_paise <= 0:
+                return Response({"detail": "Invalid amount"}, status=400)
 
-            payment = razorpay_client.order.create({
+            order = razorpay_client.order.create({
                 "amount": amount_paise,
                 "currency": "INR",
-                "payment_capture": "1"
+                "payment_capture": 1,
+                "receipt": f"sell-{sell_request.id}"
             })
 
             return Response({
-                "order_id": payment["id"],
+                "key_id": settings.RAZORPAY_KEY_ID,
+                "order_id": order["id"],
                 "amount": amount_paise,
-                "currency": "INR"
-            })
+                "currency": "INR",
+                "sell_request_id": sell_request.id
+            }, status=200)
 
+        except Http404:
+            # Proper 404 instead of masked 500
+            return Response({"detail": "Sell request not found"}, status=404)
         except Exception as e:
             print("CreateRazorpaySellOrder ERROR:", str(e))
             return Response({"detail": "Something went wrong", "error": str(e)}, status=500)
 
 
+
+
+from django.http import Http404
 
 @api_view(["POST"])
 @permission_classes([permissions.IsAuthenticated])
@@ -569,15 +687,24 @@ class CreateRazorpaySellOrder(APIView):
 def verify_sell_payment(request):
     data = request.data
     request_id = data.get("request_id")
-    sell_request = get_object_or_404(SellGold, id=request_id, user=request.user)
+    if not request_id:
+        return Response({"detail": "Request ID is required."}, status=400)
+
+    try:
+        is_admin = bool(getattr(request.user, "is_staff", False) or getattr(request.user, "is_superuser", False))
+        if is_admin:
+            sell_request = get_object_or_404(SellGold, id=request_id)
+        else:
+            sell_request = get_object_or_404(SellGold, id=request_id, user=request.user)
+    except Http404:
+        return Response({"detail": "Sell request not found"}, status=404)
 
     if not sell_request.is_approved:
         return Response({"detail": "Sell request not approved."}, status=403)
 
-    # Optionally verify payment here using Razorpay signature
-    # Or rely on Razorpay Webhook for production-level verification
+    # Optionally: verify Razorpay signature here
 
-    user_profile = UserProfile.objects.get(user=request.user)
+    user_profile = UserProfile.objects.get(user=sell_request.user)
 
     if user_profile.gold_balance < sell_request.gold_in_grams:
         return Response({"detail": "Insufficient gold in wallet."}, status=400)
@@ -589,13 +716,59 @@ def verify_sell_payment(request):
 
     # Create transaction
     Transaction.objects.create(
-        user=request.user,
+        user=sell_request.user,
         transaction_type='sell',
         gold_amount=sell_request.gold_in_grams,
         rupee_amount=sell_request.amount_in_rupees,
         gold_price_per_gram=sell_request.amount_in_rupees / sell_request.gold_in_grams
     )
 
-    sell_request.delete()  # Optional: delete after successful payment
+    sell_request.delete()  # only after successful payment
 
     return Response({"detail": "Sell payment successful and wallet updated."})
+
+# views.py (add this helper)
+def verify_razorpay_signature(order_id: str, payment_id: str, signature: str):
+    """
+    Returns True if signature is valid, else raises razorpay.errors.SignatureVerificationError
+    """
+    payload = {
+        'razorpay_order_id': order_id,
+        'razorpay_payment_id': payment_id,
+        'razorpay_signature': signature,
+    }
+    razorpay_client.utility.verify_payment_signature(payload)
+    return True
+
+
+class CreateRazorpayBuyOrder(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        try:
+            amount_rupees = request.data.get("amount")
+            if not amount_rupees:
+                return Response({"detail": "Amount is required"}, status=400)
+
+            try:
+                amount_rupees = float(amount_rupees)
+                amount_paise = int(amount_rupees * 100)  # Razorpay works in paise
+            except ValueError:
+                return Response({"detail": "Invalid amount"}, status=400)
+
+            payment = razorpay_client.order.create({
+                "amount": amount_paise,
+                "currency": "INR",
+                "payment_capture": "1"
+            })
+
+            return Response({
+                "order_id": payment["id"],
+                "amount": amount_paise,
+                "currency": "INR",
+                "key": settings.RAZORPAY_KEY_ID  # send public key to frontend
+            })
+
+        except Exception as e:
+            print("CreateRazorpayBuyOrder ERROR:", str(e))
+            return Response({"detail": "Something went wrong", "error": str(e)}, status=500)

@@ -24,5 +24,6 @@ urlpatterns = [
     path('verify-payment/', verify_payment, name='verify-payment'),
     path('create-razorpay-sell-order/', CreateRazorpaySellOrder.as_view(), name='create-razorpay-sell-order'),
     path('verify-sell-payment/', verify_sell_payment, name='verify-sell-payment'),
+    path("create-razorpay-buy-order/", CreateRazorpayBuyOrder.as_view(), name="create_razorpay_buy_order"),
 ]
 

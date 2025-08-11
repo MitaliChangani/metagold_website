@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Sell from '../assets/Sell.png';
-// import { toast } from 'react-toastify';
-import axios from '../api/axios'
+import axios from '../api/axios';
 
 function Sellgold() {
   const [amount, setAmount] = useState(100);
@@ -12,8 +11,6 @@ function Sellgold() {
   const [wallet, setWallet] = useState(null);
   const [transactions, setTransactions] = useState([]);
   const notifiedRef = useRef(false);
-
-  const razorpayKey = "YOUR_PUBLIC_RAZORPAY_KEY";
 
   const goldPrice = 10086.03;
 
@@ -50,9 +47,8 @@ function Sellgold() {
       });
 
       setLatestRequestId(res.data.request_id);
-      notifiedRef.current = false;  // reset notification flag
+      notifiedRef.current = false;
       alert('✅ Sell request sent successfully. Awaiting admin approval.');
-
     } catch (err) {
       console.error(err);
       if (err.response?.data?.detail) {
@@ -65,96 +61,42 @@ function Sellgold() {
     }
   };
 
-
-  const handleRazorpay = async () => {
-    try {
-      const orderResponse = await axios.post('/create-razorpay-sell-order/', {
-        request_id: latestRequestId,
-      });
-
-      const options = {
-        key: razorpayKey,
-        amount: orderResponse.data.amount,
-        currency: 'INR',
-        name: 'MetaGold',
-        description: 'Sell Gold Payment',
-        order_id: orderResponse.data.id,
-        handler: async (response) => {
-          try {
-            await axios.post('/verify-sell-payment/', {
-              request_id: latestRequestId,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_signature: response.razorpay_signature,
-            });
-
-            alert('✅ Payment successful & verified!');
-            fetchWallet();
-            fetchTransactions();
-          } catch (err) {
-            console.error("Verification failed", err);
-            alert("❌ Payment verification failed. Contact support.");
-          }
-        },
-        theme: {
-          color: '#f0b90b',
-        },
-      };
-
-      const razor = new window.Razorpay(options);
-      razor.open();
-    } catch (error) {
-      console.error('Razorpay error:', error);
-      alert('❌ Razorpay failed to load');
-    }
-  };
-
-
   useEffect(() => {
     setGrams((amount / goldPrice).toFixed(4));
   }, [amount]);
 
- useEffect(() => {
-  if (!latestRequestId) return; // Don't start interval if no request ID
+  useEffect(() => {
+    if (!latestRequestId) return;
 
-  const interval = setInterval(async () => {
-    try {
-      const res = await axios.get(`/sell-status/${latestRequestId}/`, {
-        withCredentials: true,
-      });
+    const interval = setInterval(async () => {
+      try {
+        const res = await axios.get(`/sell-status/${latestRequestId}/`, {
+          withCredentials: true,
+        });
 
-      const data = res.data;
-      console.log("Polling approval status:", data);
+        if (res.data.is_approved === true && !notifiedRef.current) {
+          notifiedRef.current = true;
+          alert('🎉 Admin approved your sell request. Funds will be credited soon.');
+          fetchWallet();
+          fetchTransactions();
+          clearInterval(interval);
+        }
+      } catch (error) {
+        console.error('Error checking approval status:', error);
 
-      if (data.is_approved === true) {
-        // notifiedRef.current = true;
-        // clearInterval(interval);
-
-        alert('🎉 Admin approved your sell request. Proceeding to payment...');
-
-  // Slight delay to allow alert to complete before Razorpay opens
-       
-        handleRazorpay();
-       
+        if (error.response?.status === 401) {
+          alert('Session expired. Please log in again.');
+          clearInterval(interval);
+        }
       }
-    } catch (error) {
-      console.error('Error checking approval status:', error);
+    }, 5000);
 
-      if (error.response?.status === 401) {
-        alert('Session expired. Please log in again.');
-        clearInterval(interval);
-      }
-    }
-  }, 5000); // poll every 5 seconds
-
-  return () => clearInterval(interval); // cleanup on unmount or change
-}, [latestRequestId]); // runs only when latestRequestId changes
-
-  
+    return () => clearInterval(interval);
+  }, [latestRequestId]);
 
   return (
-    <div className="gold-saver-container" style={{display: 'flex'}}>
-      <div className="left" style={{marginRight: '-1px'}}>
+    <div className="gold-saver-container" style={{ display: 'flex' }}>
+      <div className="left" style={{ marginRight: '-1px' }}>
         <img src={Sell} alt="vault" className="vault-image" />
         <h1>Sell your <br /><span>Gold Easily</span></h1>
         <p>Withdraw money by selling your stored gold anytime.</p>
@@ -165,7 +107,7 @@ function Sellgold() {
         </div>
       </div>
 
-      <div className="right" style={{marginLeft: 'px'}}>
+      <div className="right">
         <div className="step-box">
           <div className="step-num">1</div>
           <div className="step-content">
@@ -176,10 +118,7 @@ function Sellgold() {
                 min="10"
                 step="1"
                 value={amount}
-                onChange={(e) => {
-                  const newAmount = parseFloat(e.target.value) || 0;
-                  setAmount(newAmount);
-                }}
+                onChange={(e) => setAmount(parseFloat(e.target.value) || 0)}
                 placeholder="Enter amount in INR"
                 className="grams-input"
               />
