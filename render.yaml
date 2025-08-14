@@ -1,22 +1,29 @@
 services:
   - type: web
-    name: metagold-backend
-    env: python
+    name: metagold
+    env: node
+    plan: free
     buildCommand: |
-      cd gold_app
-      pip install -r requirements.txt
-    startCommand: |
-      cd gold_app && gunicorn gold_app.wsgi
+      # Build frontend (expects existing React/Vite app in my-project)
+      if [ -d "my-project" ]; then
+        cd my-project
+        if [ -f "package.json" ]; then
+          npm install
+          npm run build || npm run build:prod || echo "Frontend build skipped (no build script)"
+        else
+          echo "No package.json in my-project; skipping frontend build"
+        fi
+        cd ..
+      else
+        echo "No my-project directory; skipping frontend build"
+      fi
+      # Install backend dependencies
+      pip install -r gold_app/requirements.txt
+    startCommand: python gold_app/app.py
     envVars:
-      - key: DATABASE_URL
-        value: mysql://root:oofNDzTvdDfpXMlQzTRiTOyJeWILGyDP@maglev.proxy.rlwy.net:59248/railway
-    plan: free
-    rootDir: gold_app  # Optional clarity
-
-  - type: web
-    name: metagold-frontend
-    env: static
-    buildCommand: npm run build
-    staticPublishPath: build
-    rootDir: my-project   # ✅ VERY IMPORTANT
-    plan: free
+      - key: PYTHON_VERSION
+        value: "3.10"
+      - key: RAZORPAY_KEY_ID
+        sync: false
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
